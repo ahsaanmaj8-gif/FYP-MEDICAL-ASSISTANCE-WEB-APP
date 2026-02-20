@@ -1,0 +1,37 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Comic+Relief:wght@400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-primary: "Oswald", "sans-serif";
+  --font-sec: "Poppins", "sans-serif";
+  --font-robo: "Roboto", "sans-serif";
+  --font-display--font-variation-settings: "opsz"32;
+  --font-display--font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  --font-anton: "Anton", "sans-serif";
+  --font-winkysans: "Winky Sans", "sans-serif";
+}
+
+::selection
+{
+  background-color: rgb(186, 186, 213);
+}
+
+
+
+
+/* Light Mode */
+.light {
+  background: white;
+  color: black;
+}
+
+/* Dark Mode */
+.dark {
+  background: #080f1fe4;
+  color: white;
+}
+
+
+
