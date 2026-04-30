@@ -2,7 +2,9 @@
 import google.generativeai as genai
 
 # Your API key
-API_KEY = "AIzaSyAXjRhlDd-jhnYng1QOB54CIQqaZAZbBNo"
+load_dotenv()  # loads .env file
+
+api_key = os.getenv("GOOGLE_API_KEY")
 
 print("🔧 Testing Gemini API...")
 
