@@ -17,7 +17,9 @@ NODE_API_URL = "http://localhost:8085/api/v1/public/specialties"
 # =========================
 # GEMINI SETUP
 # =========================
-genai.configure(api_key="AIzaSyBJ226DwhuPE-efKMgAMBGHxSxhx3Iy5y0")
+load_dotenv()  # loads .env file
+
+api_key = os.getenv("GOOGLE_API_KEY")
 gemini_model = genai.GenerativeModel("gemini-2.0-flash")
 print("✅ Gemini model loaded (gemini-2.0-flash)")
 
