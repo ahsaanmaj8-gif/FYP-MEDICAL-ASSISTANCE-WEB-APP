@@ -19,6 +19,7 @@ const SpecialtiesPage = () => {
   const fetchSpecialties = async () => {
     try {
       setLoading(true);
+      
       const response = await axios.get('http://localhost:8085/api/v1/public/specialties');
       
       if (response.data.success) {
