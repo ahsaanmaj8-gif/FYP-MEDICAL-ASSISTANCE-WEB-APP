@@ -234,7 +234,7 @@ const AppointmentsDoc = () => {
                       </p>
                       <p className="text-gray-500 text-xs mt-1">
                         {apt.appointmentType === 'video-consultation' ? '🎥 Video' : '🏥 In-Person'} • 
-                        Fee: ${apt.amount}
+                        Fee: Rs.{apt.amount}
                       </p>
                       {apt.symptoms?.length > 0 && (
                         <p className="text-gray-500 text-xs mt-1">

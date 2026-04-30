@@ -150,7 +150,7 @@ const SpecialtiesPage = () => {
             <div className={`text-2xl font-bold mb-2 ${
               theme === 'dark' ? 'text-purple-400' : 'text-purple-600'
             }`}>
-              ${Math.round(specialties.reduce((sum, spec) => sum + (spec.averageFee || 0), 0) / specialties.length) || 0}
+              Rs.{Math.round(specialties.reduce((sum, spec) => sum + (spec.averageFee || 0), 0) / specialties.length) || 0}
             </div>
             <div className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>
               Avg. Consultation Fee
@@ -251,7 +251,7 @@ const SpecialtiesPage = () => {
                     <div className={`text-sm ${
                       theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
                     }`}>
-                      Avg. Fee: <span className="font-semibold">${Math.round(specialty.averageFee || 0)}</span>
+                      Avg. Fee: <span className="font-semibold">Rs.{Math.round(specialty.averageFee || 0)}</span>
                     </div>
                     
                     <div className="mt-4">

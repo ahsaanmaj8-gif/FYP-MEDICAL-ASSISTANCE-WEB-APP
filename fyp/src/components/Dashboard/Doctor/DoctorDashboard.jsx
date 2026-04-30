@@ -374,7 +374,7 @@ const DoctorDashboard = () => {
             <div className="text-xs text-gray-400 mt-1">Need attention</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-orange-600">${stats.monthlyEarnings}</div>
+            <div className="text-3xl font-bold text-orange-600">{stats.monthlyEarnings}</div>
             <div className="text-gray-600 text-sm mt-1">This Month</div>
             <div className="text-xs text-gray-400 mt-1">
               {new Date().toLocaleDateString('default', { month: 'long' })}

@@ -218,19 +218,19 @@ const PublicPharmacyPage = () => {
                             <span className={`line-through text-sm ${
                               theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
                             }`}>
-                              ${product.price}
+                              {product.price}
                             </span>
                             <span className={`ml-2 font-bold text-xl ${
                               theme === 'dark' ? 'text-green-400' : 'text-green-600'
                             }`}>
-                              ${(product.price * (100 - product.discount) / 100).toFixed(2)}
+                              {(product.price * (100 - product.discount) / 100).toFixed(2)}
                             </span>
                           </>
                         ) : (
                           <span className={`font-bold text-xl ${
                             theme === 'dark' ? 'text-white' : 'text-gray-800'
                           }`}>
-                            ${product.price}
+                            {product.price}
                           </span>
                         )}
                       </div>

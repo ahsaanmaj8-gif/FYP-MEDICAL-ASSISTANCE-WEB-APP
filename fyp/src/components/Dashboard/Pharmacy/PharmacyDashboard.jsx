@@ -101,7 +101,7 @@ const PharmacyDashboard = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm">Today's Revenue</p>
-              <p className="text-3xl font-bold text-gray-900">${stats.todayRevenue}</p>
+              <p className="text-3xl font-bold text-gray-900">{stats.todayRevenue}</p>
             </div>
             <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-2xl">
               💰

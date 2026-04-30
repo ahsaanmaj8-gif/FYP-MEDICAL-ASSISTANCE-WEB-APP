@@ -100,7 +100,7 @@ const PharmacyOrders = () => {
                   {order.items?.map((item, idx) => (
                     <div key={idx} className="flex justify-between text-sm">
                       <span>{item.medicine?.name} x{item.quantity}</span>
-                      <span className="font-medium">${item.price * item.quantity}</span>
+                      <span className="font-medium">{item.price * item.quantity}</span>
                     </div>
                   ))}
                 </div>
@@ -109,7 +109,7 @@ const PharmacyOrders = () => {
               <div className="flex justify-between items-center pt-4 border-t">
                 <div>
                   <p className="text-sm text-gray-600">Total Amount</p>
-                  <p className="text-xl font-bold text-gray-900">${order.totalAmount}</p>
+                  <p className="text-xl font-bold text-gray-900">{order.totalAmount}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Payment</p>

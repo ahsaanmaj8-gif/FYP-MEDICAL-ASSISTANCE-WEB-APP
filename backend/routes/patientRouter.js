@@ -42,6 +42,7 @@ router.put('/appointments/:id/cancel', cancelAppointment);
 router.get('/prescriptions', getPrescriptions);
 router.get('/prescriptions/:id', getPrescriptionById);
 
+
 // Orders
 router.get('/orders', getOrders);
 

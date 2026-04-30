@@ -70,7 +70,7 @@ const LaboratoryDashboard = () => {
     },
     { 
       label: "Recent Earnings", 
-      value: `$${stats.recentEarnings}`, 
+      value: `${stats.recentEarnings}`, 
       icon: "💰", 
       color: "from-purple-500 to-pink-500",
       link: "/laboratory/earnings"

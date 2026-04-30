@@ -78,6 +78,9 @@ import ScheduleDoc from './components/Dashboard/Doctor/ScheduleDoc';
 import ProfileDoc from './components/Dashboard/Doctor/ProfileDoc';
 import EarningsDoc from './components/Dashboard/Doctor/EarningsDoc';
 import DoctorProfilePage from './components/pages/DoctorProfilePage.jsx';
+import PrescriptionDetails from './components/Dashboard/Patient/PrescriptionDetails.jsx';
+import FAQ from './components/pages/FAQ.jsx';
+import TermsAndConditions from './components/pages/TermsAndConditions';
 
 
 
@@ -132,6 +135,7 @@ function App() {
                 <Route path="dashboard" element={<PatientDashboard />} />
                 <Route path="appointments" element={<Appointments />} />
                 <Route path="prescriptions" element={<Prescriptions />} />
+                <Route path="prescriptions/:id" element={<PrescriptionDetails />} />
                 <Route path="medical-records" element={<MedicalRecords />} />
                 <Route path="pharmacy-orders" element={<PharmacyOrders />} />
                 <Route path="lab-tests" element={<LabTests />} />
@@ -144,6 +148,7 @@ function App() {
 
               <Route path="/doctor" element={<DoctorLayout />}>
                {/* <Route path="patients/:id" element={<PatientDetails />} /> */}
+               <Route path="prescriptions/:id" element={<PrescriptionDetails />} />
                 <Route path="dashboard" element={<DoctorDashboard />} />
                 <Route path="appointments" element={<AppointmentsDoc />} />
                 <Route path="patients" element={<Patients />} />
@@ -153,6 +158,10 @@ function App() {
                 <Route path="profile" element={<ProfileDoc />} />
               </Route>
 
+
+
+<Route path="/faq" element={<FAQ />} />
+<Route path="/terms" element={<TermsAndConditions />} />
 
 
               {/* pharmacy panel */}

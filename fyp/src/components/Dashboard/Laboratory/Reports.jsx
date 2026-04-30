@@ -246,7 +246,7 @@ const Reports = () => {
                         📞 {appointment.patientPhone || 'N/A'}
                       </span>
                       <span className="text-sm text-gray-500">
-                        💰 ${appointment.amount || 0}
+                        💰 {appointment.amount || 0}
                       </span>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                         appointment.status === 'sample_collected' 

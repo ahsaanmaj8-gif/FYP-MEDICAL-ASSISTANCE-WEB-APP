@@ -184,7 +184,7 @@ const LabTestBookingPage = () => {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Price</span>
-                <span className="font-bold text-green-600">${test.price || 'Contact'}</span>
+                <span className="font-bold text-green-600">{test.price || 'Contact'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Report Time</span>

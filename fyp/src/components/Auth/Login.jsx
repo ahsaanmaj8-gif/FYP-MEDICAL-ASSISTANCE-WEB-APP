@@ -76,76 +76,91 @@ const Login = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Login to MediCare
-        </h2>
+return (
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 px-4">
+    
+    <div className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-8 text-white">
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              E-mail
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+      <h2 className="text-3xl font-bold text-center mb-2">
+        Welcome Back 👋
+      </h2>
 
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+      <p className="text-center text-white/70 mb-6">
+        Login to MediCare
+      </p>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200 disabled:opacity-50"
-          >
-            {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <i className="fa-solid fa-spinner fa-spin-pulse"></i>
-                Signing In...
-              </span>
-            ) : (
-              'Sign In'
-            )}
-          </button>
-        </form>
+      <form onSubmit={handleSubmit} className="space-y-5">
 
-        <p className="text-center text-sm text-gray-500 mt-6">
-          Don't have an account?{' '}
-          <Link
-            to="/role-selection"
-            className="text-blue-600 hover:underline"
-          >
-            Sign up
-          </Link>
-        </p>
-      </div>
+        {/* Email */}
+        <div>
+          <label className="block text-sm mb-1 text-white/80">
+            E-mail
+          </label>
+          <input
+            type="email"
+            className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20
+                       text-white placeholder-white/50
+                       focus:outline-none focus:ring-2 focus:ring-white/40
+                       transition"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        {/* Password */}
+        <div>
+          <label className="block text-sm mb-1 text-white/80">
+            Password
+          </label>
+          <input
+            type="password"
+            className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20
+                       text-white placeholder-white/50
+                       focus:outline-none focus:ring-2 focus:ring-white/40
+                       transition"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+
+        {/* Button */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-3 rounded-xl font-semibold
+                     bg-gradient-to-r from-cyan-400 to-blue-500
+                     hover:from-cyan-300 hover:to-blue-400
+                     transition-all duration-300
+                     shadow-lg shadow-blue-500/30
+                     disabled:opacity-50"
+        >
+          {loading ? (
+            <span className="flex items-center justify-center gap-2">
+              <i className="fa-solid fa-spinner fa-spin"></i>
+              Signing In...
+            </span>
+          ) : (
+            "Sign In"
+          )}
+        </button>
+
+      </form>
+
+      {/* Footer */}
+      <p className="text-center text-sm text-white/70 mt-6">
+        Don't have an account?{" "}
+        <Link
+          to="/role-selection"
+          className="text-cyan-300 hover:text-cyan-200 font-medium"
+        >
+          Sign up
+        </Link>
+      </p>
     </div>
-  );
+  </div>
+);
 };
 
 export default Login;

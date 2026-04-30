@@ -248,12 +248,12 @@ const PharmacySection = () => {
                             <span className={`line-through text-sm ${
                               theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
                             }`}>
-                              ${product.price}
+                              {product.price}
                             </span>
                             <span className={`ml-2 font-bold ${
                               theme === 'dark' ? 'text-green-400' : 'text-green-600'
                             }`}>
-                              ${(product.price * (100 - product.discount) / 100).toFixed(2)}
+                              {(product.price * (100 - product.discount) / 100).toFixed(2)}
                             </span>
                             <span className={`ml-2 text-xs ${
                               theme === 'dark' ? 'bg-green-900 text-green-300' : 'bg-green-100 text-green-800'
@@ -265,7 +265,7 @@ const PharmacySection = () => {
                           <span className={`font-bold ${
                             theme === 'dark' ? 'text-white' : 'text-gray-800'
                           }`}>
-                            ${product.price}
+                            {product.price}
                           </span>
                         )}
                       </div>
@@ -317,7 +317,7 @@ const PharmacySection = () => {
               }`}>
                 <span className={theme === 'dark' ? 'text-green-400' : 'text-green-600'}>🚚</span>
                 <span className={theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}>
-                  Free delivery on orders above $50
+                  Free delivery on orders above 50
                 </span>
               </div>
             </div>

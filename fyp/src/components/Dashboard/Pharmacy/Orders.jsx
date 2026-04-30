@@ -96,7 +96,7 @@ const Orders = () => {
                   <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
                     {order.status}
                   </span>
-                  <p className="text-xl font-bold mt-2">${order.totalAmount}</p>
+                  <p className="text-xl font-bold mt-2">{order.totalAmount}</p>
                 </div>
               </div>
 
@@ -106,7 +106,7 @@ const Orders = () => {
                   {order.items.map((item, index) => (
                     <div key={index} className="flex justify-between text-sm">
                       <span>{item.medicine?.name} x{item.quantity}</span>
-                      <span>${item.price * item.quantity}</span>
+                      <span>{item.price * item.quantity}</span>
                     </div>
                   ))}
                 </div>

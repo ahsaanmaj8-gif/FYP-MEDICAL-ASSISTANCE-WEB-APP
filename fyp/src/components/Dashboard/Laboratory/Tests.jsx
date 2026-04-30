@@ -137,7 +137,7 @@ const Tests = () => {
               />
               <input
                 type="number"
-                placeholder="Price ($) *"
+                placeholder="Price () *"
                 value={newTest.price}
                 onChange={(e) => setNewTest({...newTest, price: e.target.value})}
                 className="border p-2 rounded w-full"
@@ -188,7 +188,7 @@ const Tests = () => {
                       <p className="text-gray-600 text-sm">{test.category}</p>
                       <p className="text-sm text-gray-500">{test.description}</p>
                       <div className="flex space-x-4 mt-1">
-                        <span className="font-semibold">${test.price}</span>
+                        <span className="font-semibold">{test.price}</span>
                         <span className="text-gray-500">{test.duration}</span>
                       </div>
                     </div>
@@ -228,7 +228,7 @@ const Tests = () => {
                       <p className="text-gray-600 text-sm">{test.category}</p>
                       <p className="text-sm text-gray-500">{test.description}</p>
                       <div className="flex space-x-4 mt-1">
-                        <span className="font-semibold">${test.price}</span>
+                        <span className="font-semibold">{test.price}</span>
                         <span className="text-gray-500">{test.duration}</span>
                       </div>
                     </div>

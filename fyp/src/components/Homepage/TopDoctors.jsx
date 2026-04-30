@@ -212,7 +212,7 @@ const TopDoctors = () => {
                       <span className={`font-semibold ${
                         theme === 'dark' ? 'text-white' : 'text-gray-800'
                       }`}>
-                        ${doctor.consultationFee}
+                        Rs.{doctor.consultationFee}
                       </span>
                     </div>
                     <div className="flex justify-between text-sm">

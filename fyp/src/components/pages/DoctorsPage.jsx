@@ -125,7 +125,7 @@ const DoctorsPage = () => {
       
       <main className="container mx-auto px-4 py-8">
         {/* Hero Section */}
-        <div className={`rounded-2xl p-8 mb-8 ${
+        <div className={`rounded-2xl  p-8 mb-8 ${
           theme === 'dark' 
             ? 'bg-gradient-to-r from-gray-800 to-blue-900' 
             : 'bg-gradient-to-r from-blue-50 to-indigo-50'
@@ -244,7 +244,7 @@ const DoctorsPage = () => {
 
                 {/* Fee Filter */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Max Fee ($)</label>
+                  <label className="block text-sm font-medium mb-2">Max Fee</label>
                   <input
                     type="number"
                     min="0"
@@ -428,7 +428,7 @@ const DoctorsPage = () => {
                           <span className={`font-semibold ${
                             theme === 'dark' ? 'text-white' : 'text-gray-800'
                           }`}>
-                            ${doctor.consultationFee}
+                            Rs.{doctor.consultationFee}
                           </span>
                         </div>
                         

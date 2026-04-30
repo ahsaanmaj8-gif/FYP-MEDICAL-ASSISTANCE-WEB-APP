@@ -492,7 +492,7 @@ const SignupDoctor = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Consultation Fee ($) *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Consultation Fee (Rs.) *</label>
                   <input
                     type="number"
                     value={consultationFee}
@@ -535,7 +535,7 @@ const SignupDoctor = () => {
                   </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Follow-up Fee ($)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Follow-up Fee (Rs.)</label>
                   <input
                     type="number"
                     value={followUpFee}

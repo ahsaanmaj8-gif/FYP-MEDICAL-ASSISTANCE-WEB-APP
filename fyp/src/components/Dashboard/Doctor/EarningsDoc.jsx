@@ -97,7 +97,7 @@ const EarningsDoc = () => {
               <span className="font-bold">
                 {earnings.totalConsultations > 0 
                   ? formatCurrency(earnings.totalEarnings / earnings.totalConsultations)
-                  : '$0.00'}
+                  : 'Rs0.00'}
               </span>
             </div>
             <div className="flex justify-between py-2 border-b">
@@ -105,18 +105,18 @@ const EarningsDoc = () => {
               <span className="font-bold">
                 {earnings.thisMonthConsultations > 0
                   ? formatCurrency(earnings.thisMonthEarnings / earnings.thisMonthConsultations)
-                  : '$0.00'}
+                  : 'Rs0.00'}
               </span>
             </div>
           </div>
           <div>
             <div className="flex justify-between py-2 border-b">
               <span className="text-gray-600">Consultation fee:</span>
-              <span className="font-bold">$50.00</span>
+              <span className="font-bold">Rs.50.00</span>
             </div>
             <div className="flex justify-between py-2 border-b">
               <span className="text-gray-600">Follow-up fee:</span>
-              <span className="font-bold">$30.00</span>
+              <span className="font-bold">Rs.30.00</span>
             </div>
           </div>
         </div>

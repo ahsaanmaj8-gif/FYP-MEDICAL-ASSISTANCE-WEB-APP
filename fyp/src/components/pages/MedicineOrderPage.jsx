@@ -224,7 +224,7 @@ const handleSubmit = async (e) => {
       toast.success('Order placed successfully! 💊');
       
       // Show order details
-      toast.success(`Order #${response.data.data.orderNumber} - Total: $${response.data.data.totalAmount}`);
+      toast.success(`Order #${response.data.data.orderNumber} - Total: ${response.data.data.totalAmount}`);
       
       // Redirect to patient orders page
       setTimeout(() => {
@@ -337,10 +337,10 @@ const handleSubmit = async (e) => {
                     {product.discount > 0 ? (
                       <>
                         <span className="line-through text-gray-400 text-sm">
-                          ${product.price}
+                          {product.price}
                         </span>
                         <span className="ml-2 text-xl font-bold text-green-600">
-                          ${(product.price * (100 - product.discount) / 100).toFixed(2)}
+                          {(product.price * (100 - product.discount) / 100).toFixed(2)}
                         </span>
                         <div className="text-xs text-green-800 bg-green-100 px-2 py-1 rounded-full inline-block mt-1">
                           {product.discount}% OFF
@@ -348,7 +348,7 @@ const handleSubmit = async (e) => {
                       </>
                     ) : (
                       <span className="text-xl font-bold text-green-600">
-                        ${product.price}
+                        {product.price}
                       </span>
                     )}
                   </div>
@@ -391,7 +391,7 @@ const handleSubmit = async (e) => {
                 <div className="flex justify-between items-center">
                   <span className="text-gray-700">Total Amount:</span>
                   <span className="text-2xl font-bold text-green-700">
-                    ${totalAmount}
+                    {totalAmount}
                   </span>
                 </div>
                 <p className="text-xs text-green-600 mt-2 flex items-center">

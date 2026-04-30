@@ -212,7 +212,7 @@ const BookAppointment = () => {
                       {doctor && (
                         <div className="text-right">
                           <p className="text-sm text-gray-600">Consultation Fee</p>
-                          <p className="text-2xl font-bold text-blue-600">${doctor.consultationFee}</p>
+                          <p className="text-2xl font-bold text-blue-600">Rs.{doctor.consultationFee}</p>
                         </div>
                       )}
                     </div>
@@ -396,7 +396,7 @@ const BookAppointment = () => {
                     <div className="border-t pt-3 mt-3">
                       <div className="flex justify-between">
                         <span className="font-semibold">Total Amount:</span>
-                        <span className="text-2xl font-bold text-blue-600">${doctor?.consultationFee}</span>
+                        <span className="text-2xl font-bold text-blue-600">Rs.{doctor?.consultationFee}</span>
                       </div>
                     </div>
                   </div>

@@ -202,7 +202,7 @@ const PublicLabTestsPage = () => {
 
                     <div className="flex justify-between items-center">
                       <span className="font-bold text-xl">
-                        ${test.price || 'Contact for price'}
+                        {test.price || 'Contact for price'}
                       </span>
                       
                       <button

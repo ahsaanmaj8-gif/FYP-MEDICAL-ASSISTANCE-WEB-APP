@@ -69,7 +69,7 @@ const Earnings = () => {
           <div>
             <h2 className="text-2xl font-bold">Total Revenue</h2>
             <p className="text-blue-100">This {period}</p>
-            <div className="text-4xl font-bold mt-4">${earnings.totalAmount}</div>
+            <div className="text-4xl font-bold mt-4">{earnings.totalAmount}</div>
             <p className="text-green-300 mt-2">{earnings.totalAppointments} appointments</p>
           </div>
           <div className="text-5xl">💰</div>
@@ -93,7 +93,7 @@ const Earnings = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold">${test.totalRevenue}</div>
+                  <div className="font-bold">{test.totalRevenue}</div>
                   <div className="text-green-500 text-sm">
                     {Math.round((test.totalRevenue / earnings.totalAmount) * 100)}% of total
                   </div>
@@ -116,7 +116,7 @@ const Earnings = () => {
         <div className="bg-white p-6 rounded-xl shadow-md border text-center">
           <div className="text-2xl mb-2">💰</div>
           <div className="text-2xl font-bold">
-            ${earnings.totalAppointments > 0 ? Math.round(earnings.totalAmount / earnings.totalAppointments) : 0}
+            {earnings.totalAppointments > 0 ? Math.round(earnings.totalAmount / earnings.totalAppointments) : 0}
           </div>
           <div className="text-gray-600">Avg. per Test</div>
         </div>

@@ -56,7 +56,7 @@ const Earningss = () => {
           <div>
             <h2 className="text-2xl font-bold mb-2">Total Earnings</h2>
             <p className="text-blue-100 text-lg">This {timeRange}</p>
-            <div className="text-4xl font-bold mt-4">${currentData.total.toLocaleString()}</div>
+            <div className="text-4xl font-bold mt-4">{currentData.total.toLocaleString()}</div>
             <div className="text-green-300 text-lg mt-2">{currentData.growth} from last {timeRange}</div>
           </div>
           <div className="text-right">
@@ -69,21 +69,21 @@ const Earningss = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center">
           <div className="text-2xl mb-2">👨‍⚕️</div>
-          <div className="text-2xl font-bold text-gray-900">${currentData.doctorCommissions.toLocaleString()}</div>
+          <div className="text-2xl font-bold text-gray-900">{currentData.doctorCommissions.toLocaleString()}</div>
           <div className="text-gray-600">Doctor Commissions</div>
           <div className="text-green-500 text-sm mt-1">65% of total</div>
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center">
           <div className="text-2xl mb-2">💊</div>
-          <div className="text-2xl font-bold text-gray-900">${currentData.pharmacyCommissions.toLocaleString()}</div>
+          <div className="text-2xl font-bold text-gray-900">{currentData.pharmacyCommissions.toLocaleString()}</div>
           <div className="text-gray-600">Pharmacy Commissions</div>
           <div className="text-blue-500 text-sm mt-1">25% of total</div>
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center">
           <div className="text-2xl mb-2">🔬</div>
-          <div className="text-2xl font-bold text-gray-900">${currentData.labCommissions.toLocaleString()}</div>
+          <div className="text-2xl font-bold text-gray-900">{currentData.labCommissions.toLocaleString()}</div>
           <div className="text-gray-600">Lab Commissions</div>
           <div className="text-purple-500 text-sm mt-1">10% of total</div>
         </div>
@@ -109,7 +109,7 @@ const Earningss = () => {
               </div>
               
               <div className="text-right">
-                <div className="font-bold text-gray-900">${transaction.amount}</div>
+                <div className="font-bold text-gray-900">{transaction.amount}</div>
                 <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">
                   {transaction.status}
                 </span>

@@ -10,6 +10,8 @@ import LabTestsSection from './LabTestsSection'; // NEW
 import HowItWorks from './HowItWorks';
 import Footer from './Footer';
 import { ThemeContext } from './../../context/ThemeContext';
+import FAQPreview from './FAQPreview';
+import TermsPreview from './TermsPreview';
 
 const Homepage = () => {
   const { theme } = useContext(ThemeContext);
@@ -22,9 +24,11 @@ const Homepage = () => {
       <Features />
       <DoctorCategories />
       <TopDoctors />
-      <PharmacySection />     {/* NEW SECTION */}
-      <LabTestsSection />     {/* NEW SECTION */}
+      <PharmacySection />     
+      <LabTestsSection />     
       <HowItWorks />
+       <FAQPreview />        
+      <TermsPreview />
       <Footer />
     </div>
   );

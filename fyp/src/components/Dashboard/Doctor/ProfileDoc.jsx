@@ -114,7 +114,7 @@ const ProfileDoc = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Consultation Fee ($)</label>
+                <label className="block text-sm font-medium mb-2">Consultation Fee (Rs.)</label>
                 <input
                   type="number"
                   value={formData.consultationFee}
@@ -125,7 +125,7 @@ const ProfileDoc = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Follow-up Fee ($)</label>
+                <label className="block text-sm font-medium mb-2">Follow-up Fee (Rs.)</label>
                 <input
                   type="number"
                   value={formData.followUpFee}
@@ -166,12 +166,12 @@ const ProfileDoc = () => {
                   </p>
                   <p className="text-sm">
                     <span className="text-gray-500">Consultation Fee:</span>
-                    <span className="ml-2 font-bold text-green-600">${profile.consultationFee}</span>
+                    <span className="ml-2 font-bold text-green-600">Rs.{profile.consultationFee}</span>
                   </p>
                   {profile.followUpFee > 0 && (
                     <p className="text-sm">
                       <span className="text-gray-500">Follow-up Fee:</span>
-                      <span className="ml-2 font-medium">${profile.followUpFee}</span>
+                      <span className="ml-2 font-medium">Rs.{profile.followUpFee}</span>
                     </p>
                   )}
                 </div>

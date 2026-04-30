@@ -1,122 +1,202 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ThemeContext } from '../../context/ThemeContext';
 import axios from 'axios';
-import { ThemeContext } from './../../context/ThemeContext';
 
 const SymptomChecker = () => {
+  const { theme } = useContext(ThemeContext);
+  const navigate = useNavigate();
+  
   const [symptoms, setSymptoms] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [recommendations, setRecommendations] = useState(null);
-  const { theme } = useContext(ThemeContext); // <-- get theme
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState('');
 
-  const handleSymptomCheck = async (e) => {
-    e.preventDefault();
-    if (!symptoms.trim()) return;
-
-    setIsLoading(true);
-    try {
-      const response = await axios.post('/api/ai/symptom-check', { symptoms });
-      setRecommendations(response.data);
-    } catch (error) {
-      console.error('Error checking symptoms:', error);
-      // Mock response
-      setRecommendations({
-        possibleConditions: ['Common Cold', 'Seasonal Allergy'],
-        recommendedSpecializations: ['General Physician', 'ENT Specialist'],
-        emergency: false,
-        doctors: []
-      });
+  const handleAnalyze = async () => {
+    if (!symptoms.trim() || symptoms.length < 5) {
+      setError('Please describe your symptoms in more detail (at least 5 characters)');
+      return;
     }
-    setIsLoading(false);
+
+    setLoading(true);
+    setError('');
+    setResult(null);
+
+    try {
+      const response = await axios.post('http://localhost:5028/api/ai/analyze', {
+        symptoms: symptoms
+      });
+
+      if (response.data.success) {
+        setResult({
+          primaryDoctor: response.data.primary_doctor,
+          recommendedDoctors: response.data.recommended_doctors,
+          urgency: response.data.urgency,
+          condition: response.data.condition,
+          message: response.data.message,
+          confidence: response.data.confidence
+        });
+      } else {
+        setError(response.data.message || 'Unable to analyze symptoms. Please try again.');
+      }
+    } catch (err) {
+      console.error('Error analyzing symptoms:', err);
+      setError('AI service is currently unavailable. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const handleBookDoctor = (doctorName) => {
+    navigate(`/doctors?specialty=${encodeURIComponent(doctorName)}`);
+  };
+
+  const getUrgencyColor = (urgency) => {
+    switch(urgency) {
+      case 'emergency': return 'text-red-600 bg-red-100';
+      case 'high': return 'text-orange-600 bg-orange-100';
+      case 'medium': return 'text-yellow-600 bg-yellow-100';
+      default: return 'text-green-600 bg-green-100';
+    }
+  };
+
+  const bgColor = theme === 'dark' ? 'bg-gray-800' : 'bg-white';
+  const textColor = theme === 'dark' ? 'text-white' : 'text-gray-900';
+  const subTextColor = theme === 'dark' ? 'text-gray-300' : 'text-gray-600';
+  const inputBg = theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-900';
+
   return (
-    <section className={`py-16 ${theme === 'dark' ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-800'}`}>
+    <section className={`py-16 ${bgColor}`}>
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+          {/* Header */}
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 mb-4">
+              <span className="text-3xl">🤖</span>
+            </div>
+            <h2 className={`text-3xl md:text-4xl font-bold ${textColor} mb-4`}>
               AI Symptom Checker
             </h2>
-            <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} text-lg`}>
-              Describe your symptoms in your own words and get instant doctor recommendations
+            <p className={`text-lg ${subTextColor}`}>
+              Describe your symptoms and our AI will suggest the right doctor specialty
+            </p>
+            <p className={`text-sm ${subTextColor} mt-2`}>
+              ⚠️ This is not a medical diagnosis. Always consult a doctor.
             </p>
           </div>
 
-          <div className={`rounded-2xl p-8 shadow-lg ${theme === 'dark' ? 'bg-gray-800 shadow-gray-700' : 'bg-gray-50 shadow-gray-200'}`}>
-            <form onSubmit={handleSymptomCheck} className="mb-8">
-              <div className="mb-6">
-                <label htmlFor="symptoms" className="block font-medium mb-3">
-                  What symptoms are you experiencing?
-                </label>
-                <textarea
-                  id="symptoms"
-                  value={symptoms}
-                  onChange={(e) => setSymptoms(e.target.value)}
-                  placeholder="Example: I have fever, headache, and body pain since yesterday morning..."
-                  className={`w-full h-32 px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent resize-none ${
-                    theme === 'dark' ? 'bg-gray-700 border-gray-600 text-gray-100 focus:ring-blue-500' : 'bg-white border-gray-300 text-gray-800 focus:ring-blue-500'
-                  }`}
-                  required
-                />
-              </div>
+          {/* Input Area */}
+          <div className={`p-6 rounded-2xl shadow-lg ${bgColor} border`}>
+            <label className={`block text-sm font-medium ${textColor} mb-2`}>
+              Describe your symptoms
+            </label>
+            <textarea
+              value={symptoms}
+              onChange={(e) => setSymptoms(e.target.value)}
+              placeholder="Example: I have chest pain, difficulty breathing, and feel dizzy..."
+              rows="4"
+              className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 ${inputBg}`}
+            />
+            
+            <div className="flex justify-between items-center mt-4">
+              <p className={`text-xs ${subTextColor}`}>
+                {symptoms.length}/500 characters
+              </p>
               <button
-                type="submit"
-                disabled={isLoading}
-                className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition duration-300 ${
-                  theme === 'dark'
-                    ? 'bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50'
-                    : 'bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50'
-                }`}
+                onClick={handleAnalyze}
+                disabled={loading}
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 flex items-center gap-2"
               >
-                {isLoading ? 'Analyzing Symptoms...' : 'Check Symptoms & Find Doctors'}
-              </button>
-            </form>
-
-            {recommendations && (
-              <div className={`rounded-lg p-6 border ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-200 text-gray-800'}`}>
-                <h3 className="text-xl font-semibold mb-4">AI Analysis Results</h3>
-
-                {recommendations.emergency && (
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
-                    <div className="flex items-center">
-                      <span className="text-red-500 font-semibold">⚠️ Emergency Warning:</span>
-                      <span className="ml-2 text-red-600">Please seek immediate medical attention</span>
-                    </div>
-                  </div>
+                {loading ? (
+                  <>
+                    <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+                    Analyzing...
+                  </>
+                ) : (
+                  'Analyze Symptoms 🔍'
                 )}
+              </button>
+            </div>
+          </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
+          {/* Error Message */}
+          {error && (
+            <div className="mt-6 p-4 bg-red-100 dark:bg-red-900/30 border border-red-200 rounded-lg">
+              <p className="text-red-600 dark:text-red-400">{error}</p>
+            </div>
+          )}
+
+          {/* Result Area */}
+          {result && (
+            <div className="mt-8 space-y-4">
+              {/* Urgency Badge */}
+              <div className={`p-4 rounded-lg ${getUrgencyColor(result.urgency)}`}>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">
+                    {result.urgency === 'emergency' ? '🚨' : 
+                     result.urgency === 'high' ? '⚠️' : 
+                     result.urgency === 'medium' ? '📋' : 'ℹ️'}
+                  </span>
                   <div>
-                    <h4 className="font-semibold mb-2">Possible Conditions</h4>
-                    <ul className="list-disc list-inside space-y-1">
-                      {recommendations.possibleConditions?.map((condition, index) => (
-                        <li key={index}>{condition}</li>
-                      ))}
-                    </ul>
+                    <p className="font-semibold">Urgency: {result.urgency.toUpperCase()}</p>
+                    {result.urgency === 'emergency' && (
+                      <p className="text-sm">Please seek immediate medical attention!</p>
+                    )}
                   </div>
-
-                  <div>
-                    <h4 className="font-semibold mb-2">Recommended Specialists</h4>
-                    <ul className="list-disc list-inside space-y-1">
-                      {recommendations.recommendedSpecializations?.map((spec, index) => (
-                        <li key={index}>{spec}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-6 pt-6 border-t">
-                  <button className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition duration-300">
-                    View Recommended Doctors
-                  </button>
                 </div>
               </div>
-            )}
-          </div>
 
-          <div className={`mt-8 text-center text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-            <p>Note: This AI tool provides preliminary information only. Always consult a doctor for accurate diagnosis.</p>
-          </div>
+              {/* Recommendation Card */}
+              <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-6 text-white">
+                <h3 className="font-bold text-xl mb-3">🎯 AI Recommendation</h3>
+                <p className="text-blue-100 mb-4">{result.message}</p>
+                
+                <div className="flex flex-wrap gap-3 mt-4">
+                  <button
+                    onClick={() => handleBookDoctor(result.primaryDoctor)}
+                    className="bg-white text-blue-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition"
+                  >
+                    Book {result.primaryDoctor} →
+                  </button>
+                  
+                  {result.recommendedDoctors?.map((doctor, idx) => (
+                    doctor !== result.primaryDoctor && (
+                      <button
+                        key={idx}
+                        onClick={() => handleBookDoctor(doctor)}
+                        className="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition"
+                      >
+                        {doctor}
+                      </button>
+                    )
+                  ))}
+                </div>
+              </div>
+
+              {/* Condition Info */}
+              {result.condition && (
+                <div className={`p-4 rounded-lg border ${bgColor}`}>
+                  <p className={`text-sm ${subTextColor}`}>
+                    <span className="font-semibold">Possible Condition:</span> {result.condition}
+                  </p>
+                  {result.confidence && (
+                    <div className="mt-2">
+                      <div className="flex justify-between text-xs mb-1">
+                        <span>AI Confidence</span>
+                        <span>{result.confidence}%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-blue-600 h-2 rounded-full" 
+                          style={{ width: `${result.confidence}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </section>

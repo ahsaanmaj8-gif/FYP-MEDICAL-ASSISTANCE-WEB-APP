@@ -251,7 +251,7 @@ const LabTestsSection = () => {
                       <span className={`font-bold text-xl ${
                         theme === 'dark' ? 'text-white' : 'text-gray-800'
                       }`}>
-                        ${test.price}
+                        {test.price}
                       </span>
                       
 

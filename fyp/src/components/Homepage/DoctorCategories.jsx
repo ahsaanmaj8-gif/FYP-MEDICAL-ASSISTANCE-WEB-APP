@@ -160,7 +160,7 @@ const DoctorCategories = () => {
                     <p className={`text-xs mt-1 ${
                       theme === 'dark' ? 'text-gray-500' : 'text-gray-600'
                     }`}>
-                      Avg: ${Math.round(category.averageFee)}
+                      Avg: Rs.{Math.round(category.averageFee)}
                     </p>
                   )}
                 </Link>

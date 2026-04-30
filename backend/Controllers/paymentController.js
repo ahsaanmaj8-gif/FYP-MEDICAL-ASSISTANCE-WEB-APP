@@ -47,6 +47,10 @@ exports.createJazzCashPayment = async (req, res) => {
     // Generate secure hash (mock for demo)
     paymentData.pp_SecureHash = 'MOCK_HASH_' + Date.now();
 
+    // this is for real payment but i not received integrity salt and password yet
+    // paymentData.pp_SecureHash = generateSecureHash(paymentData, jazzCashConfig.INTEGRITY_SALT);
+
+
     res.status(200).json({
       success: true,
       message: 'JazzCash payment initiated',
