@@ -253,10 +253,25 @@ const getAllDoctors = async (req, res) => {
   // .skip(skip)
   // .limit(parseInt(limit));
 
+
+
+
+
+
+  let sortQuery = {};
+switch (req.query.sort) {
+  case 'experience':   sortQuery = { experience: -1 }; break;
+  case 'fee_low':      sortQuery = { consultationFee: 1 }; break;
+  case 'fee_high':     sortQuery = { consultationFee: -1 }; break;
+  case 'rating':
+  default:             sortQuery = { 'rating.average': -1 }; break;
+}
+
+
   
   const doctors = await Doctor.find(query)
       .populate('user', 'name profilePicture email phone address')
-      .sort({ 'rating.average': -1 })
+      .sort(sortQuery)
       .skip(skip)
       .limit(parseInt(limit));
 
