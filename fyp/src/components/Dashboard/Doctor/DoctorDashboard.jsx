@@ -207,7 +207,7 @@ const DoctorDashboard = () => {
 
       {/* Stats Grid - REAL NUMBERS */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-2xl p-6 shadow-lg border hover:shadow-xl transition">
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-400 hover:shadow-xl transition">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm">Today's Appointments</p>
@@ -219,7 +219,7 @@ const DoctorDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-lg border hover:shadow-xl transition">
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-400 hover:shadow-xl transition">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm">Pending Consultations</p>
@@ -231,7 +231,7 @@ const DoctorDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-lg border hover:shadow-xl transition">
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-400 hover:shadow-xl transition">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm">Total Patients</p>
@@ -243,10 +243,10 @@ const DoctorDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-lg border hover:shadow-xl transition">
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-400 hover:shadow-xl transition">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm">Monthly Earnings</p>
+              <p className="text-gray-600 text-sm">Current Monthly Earnings</p>
               <p className="text-3xl font-bold text-gray-900 mt-2">Rs.{stats.monthlyEarnings}</p>
             </div>
             <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl text-white">
@@ -258,7 +258,7 @@ const DoctorDashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Today's Appointments - REAL APPOINTMENTS */}
-        <div className="bg-white rounded-2xl shadow-lg border p-6">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-400 p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold text-gray-900">Today's Schedule</h2>
             <Link to="/doctor/appointments" className="text-green-600 hover:text-green-700 text-sm font-medium">
@@ -329,7 +329,7 @@ const DoctorDashboard = () => {
           </div>
 
           {/* Recent Activity Card */}
-          <div className="bg-white rounded-2xl shadow-lg border p-6">
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-400 p-6">
             <h3 className="font-bold text-gray-900 mb-3">Today's Summary</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
@@ -356,7 +356,7 @@ const DoctorDashboard = () => {
       </div>
 
       {/* Quick Stats - REAL NUMBERS */}
-      <div className="bg-white rounded-2xl shadow-lg border p-6">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-400 p-6">
         <h2 className="text-xl font-bold text-gray-900 mb-6">Quick Stats</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="text-center">

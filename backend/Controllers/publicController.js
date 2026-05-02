@@ -245,7 +245,16 @@ const getAllDoctors = async (req, res) => {
 
     const skip = (page - 1) * limit;
 
-    const doctors = await Doctor.find(query)
+
+    //For Newest add doctorr
+  // const doctors = await Doctor.find(query)
+  // .populate('user', 'name profilePicture email phone address')
+  // .sort({ createdAt: -1 }) // newest first
+  // .skip(skip)
+  // .limit(parseInt(limit));
+
+  
+  const doctors = await Doctor.find(query)
       .populate('user', 'name profilePicture email phone address')
       .sort({ 'rating.average': -1 })
       .skip(skip)

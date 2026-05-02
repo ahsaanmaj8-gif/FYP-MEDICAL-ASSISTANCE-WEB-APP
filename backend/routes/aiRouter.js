@@ -282,7 +282,7 @@ Choose ONLY from the available specialties. Rank them by relevance.`;
     );
     
     let resultText = response.data.content[0].text.trim();
-    // console.log("Claude response:", resultText);
+    console.log("Claude response:", resultText);
     
     // ✅ Parse JSON to get top 3
     let parsedData = null;
@@ -324,7 +324,7 @@ Choose ONLY from the available specialties. Rank them by relevance.`;
     const matchedSpecialties = [];
     const symptomLower = symptom.toLowerCase();
     
-    // Simple keyword matching for top 3 if claude fail
+    // Simple keyword matching for top 3 if claude
     const keywordMap = {
      'cardiologist': ['chest', 'heart', 'blood pressure', 'cardiac'],
   'dermatologist': ['skin', 'rash', 'acne', 'eczema', 'allergy'],
@@ -387,7 +387,7 @@ router.post("/classify-doctor", async (req, res) => {
     const hfResult = await callHuggingFace(symptom);
     const elapsedTime = Date.now() - startTime;
     
-    // console.log(`⏱️ HuggingFace response time: ${elapsedTime}ms`);
+    console.log(`⏱️ HuggingFace response time: ${elapsedTime}ms`);
     
     if (hfResult.success && Array.isArray(hfResult.data) && hfResult.data.length > 0) {
       const sorted = hfResult.data.sort((a, b) => b.score - a.score);
@@ -417,7 +417,7 @@ router.post("/classify-doctor", async (req, res) => {
     }
     
     // If HuggingFace failed, try Claude
-    // console.log("🔄 HuggingFace failed, falling back to Claude API...");
+    console.log("🔄 HuggingFace failed, falling back to Claude API...");
     
     const claudeResult = await callClaudeAPI(symptom);
     const claudeTime = Date.now() - startTime;
@@ -453,7 +453,7 @@ router.post("/classify-doctor", async (req, res) => {
     }
     
     // Both APIs failed, use database fallback
-    // console.log("⚠️ Both APIs failed, using database fallback");
+    console.log("⚠️ Both APIs failed, using database fallback");
     const doctorCounts = await getDoctorCounts();
     const allCategories = Object.entries(doctorCounts).map(([name, count]) => ({
       category: name,
