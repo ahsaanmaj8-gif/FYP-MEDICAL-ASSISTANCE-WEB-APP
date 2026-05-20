@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../utils/utils';
 
 const SignupPharmacy = () => {
   const navigate = useNavigate();
@@ -168,7 +169,7 @@ const SignupPharmacy = () => {
       }
 
       const response = await axios.post(
-        'http://localhost:8085/api/v1/auth/register', 
+        `${Backend_Url}/auth/register`, 
         data, 
         {
           headers: {

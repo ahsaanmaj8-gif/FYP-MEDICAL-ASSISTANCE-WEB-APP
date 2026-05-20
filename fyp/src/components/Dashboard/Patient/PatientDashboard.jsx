@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const PatientDashboard = () => {
   const [stats, setStats] = useState({
@@ -23,7 +24,7 @@ const PatientDashboard = () => {
       const token = localStorage.getItem('token');
       
       // Fetch user profile for name
-      const profileRes = await axios.get('http://localhost:8085/api/v1/patient/profile', {
+      const profileRes = await axios.get(`${Backend_Url}/patient/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -32,7 +33,7 @@ const PatientDashboard = () => {
       }
 
       // Fetch dashboard stats
-      const statsRes = await axios.get('http://localhost:8085/api/v1/patient/dashboard', {
+      const statsRes = await axios.get(`${Backend_Url}/patient/dashboard`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -41,7 +42,7 @@ const PatientDashboard = () => {
       }
 
       // Fetch recent activity
-      const activityRes = await axios.get('http://localhost:8085/api/v1/patient/recent-activity', {
+      const activityRes = await axios.get(`${Backend_Url}/patient/recent-activity`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

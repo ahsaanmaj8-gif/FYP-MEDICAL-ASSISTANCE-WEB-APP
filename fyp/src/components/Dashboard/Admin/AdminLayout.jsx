@@ -5,6 +5,7 @@ import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { ThemeContext } from '../../../context/ThemeContext';
 import ThemeToggle from '../../ThemeToggle';
 import axios from 'axios';
+import { Backend_Url } from './../../../../utils/utils';
 
 const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -61,7 +62,7 @@ const AdminLayout = () => {
     const [recentRegistrations, setRecentRegistrations] = useState([]);
   
 
-  const API_BASE_URL = 'http://localhost:8085/api/v1/admin';
+  const API_BASE_URL = `${Backend_Url}/admin`;
 
 
    const [stats, setStats] = useState({

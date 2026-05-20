@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -16,7 +17,7 @@ const Appointments = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      let url = 'http://localhost:8085/api/v1/lab/appointments';
+      let url = `${Backend_Url}/lab/appointments`;
       
       const params = new URLSearchParams();
       if (status !== 'all') params.append('status', status);
@@ -42,7 +43,7 @@ const Appointments = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://localhost:8085/api/v1/lab/appointments/${appointmentId}/status`,
+        `${Backend_Url}/lab/appointments/${appointmentId}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );

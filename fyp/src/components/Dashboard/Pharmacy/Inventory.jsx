@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Inventory = () => {
   const [medicines, setMedicines] = useState([]);
@@ -24,7 +25,7 @@ const Inventory = () => {
   const fetchMedicines = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/pharmacy/medicines', {
+      const response = await axios.get(`${Backend_Url}/pharmacy/medicines`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -42,7 +43,7 @@ const Inventory = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:8085/api/v1/pharmacy/medicines', formData, {
+      const response = await axios.post(`${Backend_Url}/pharmacy/medicines`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -71,7 +72,7 @@ const Inventory = () => {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.delete(`http://localhost:8085/api/v1/pharmacy/medicines/${id}`, {
+      const response = await axios.delete(`${Backend_Url}/pharmacy/medicines/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -221,7 +222,7 @@ const Inventory = () => {
                       {medicine.type}
                     </span>
                   </td>
-                  <td className="p-4 font-bold">${medicine.price}</td>
+                  <td className="p-4 font-bold">Rs.{medicine.price}</td>
                   <td className="p-4">
                     <span className={`px-2 py-1 rounded text-sm ${
                       medicine.stock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'

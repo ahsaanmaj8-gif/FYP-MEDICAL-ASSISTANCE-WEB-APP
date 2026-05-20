@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Backend_Url } from './../../../../utils/utils';
 
 const PrescriptionsDoc = () => {
   const [prescriptions, setPrescriptions] = useState([]);
@@ -43,7 +44,7 @@ const PrescriptionsDoc = () => {
   const fetchPrescriptions = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/doctor/prescriptions', {
+      const response = await axios.get(`${Backend_Url}/doctor/prescriptions`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -64,7 +65,7 @@ const PrescriptionsDoc = () => {
     try {
       const token = localStorage.getItem('token');
       // Fetch ALL completed appointments
-      const response = await axios.get('http://localhost:8085/api/v1/doctor/appointments?filter=completed', {
+      const response = await axios.get(`${Backend_Url}/doctor/appointments?filter=completed`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -129,7 +130,7 @@ const PrescriptionsDoc = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:8085/api/v1/doctor/prescriptions',
+        `${Backend_Url}/doctor/prescriptions`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );

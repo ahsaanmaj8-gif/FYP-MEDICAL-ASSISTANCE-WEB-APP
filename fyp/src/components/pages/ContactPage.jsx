@@ -4,6 +4,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 import Header from '../Homepage/Header';
 import Footer from '../Homepage/Footer';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../utils/utils';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const ContactPage = () => {
     setLoading(true);
     
     try {
-      const response = await axios.post('http://localhost:8085/api/v1/contact/send', formData);
+      const response = await axios.post(`${Backend_Url}/contact/send`, formData);
       
       if (response.data.success) {
         toast.success(response.data.message);

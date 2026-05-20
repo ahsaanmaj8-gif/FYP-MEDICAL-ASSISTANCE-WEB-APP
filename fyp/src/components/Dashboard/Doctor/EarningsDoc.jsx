@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const EarningsDoc = () => {
   const [earnings, setEarnings] = useState({
@@ -18,7 +19,7 @@ const EarningsDoc = () => {
   const fetchEarnings = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/doctor/earnings', {
+      const response = await axios.get(`${Backend_Url}/doctor/earnings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -34,7 +35,7 @@ const EarningsDoc = () => {
   };
 
   const formatCurrency = (amount) => {
-    return `$${amount.toFixed(2)}`;
+    return `Rs.${amount.toFixed(2)}`;
   };
 
   if (loading) {

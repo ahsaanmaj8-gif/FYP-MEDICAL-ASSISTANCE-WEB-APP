@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import ReviewModal from '../Reviews/ReviewModal';
 import StarRating from '../Reviews/StarRating';
 import ReviewsList from '../Reviews/ReviewsList';
+import { Backend_Url } from './../../../utils/utils';
 
 const DoctorProfilePage = () => {
   const { doctorId } = useParams();
@@ -30,7 +31,7 @@ const DoctorProfilePage = () => {
   const fetchDoctorProfile = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:8085/api/v1/public/doctors/${doctorId}`);
+      const response = await axios.get(`${Backend_Url}/public/doctors/${doctorId}`);
       
       if (response.data.success) {
         const doctorData = response.data.data;
@@ -59,7 +60,7 @@ const DoctorProfilePage = () => {
   // ✅ ADD THIS: Fetch reviews separately to get updated stats
   const fetchReviews = async () => {
     try {
-      const response = await axios.get(`http://localhost:8085/api/v1/reviews/doctor/${doctorId}`);
+      const response = await axios.get(`${Backend_Url}/reviews/doctor/${doctorId}`);
       if (response.data.success) {
         setRatingStats({
           average: parseFloat(response.data.data.average) || 0,

@@ -373,115 +373,60 @@ const verifyDoctor = async (req, res) => {
 
 
 
-// const getPharmacies = async (req, res) => {
-//   try {
-//     const { status } = req.query;
-
-//     let query = {};
-//     if (status === 'pending') {
-//       query.isVerified = false;
-//       query.rejectionReason = ""; // ✅ Empty string means not rejected
-//     } else if (status === 'verified') {
-//       query.isVerified = true;
-//     } else if (status === 'rejected') {
-//       query.rejectionReason = { $ne: "" }; // ✅ Has rejection reason (not empty)
-//     }
-
-//     const pharmacies = await Pharmacy.find(query)
-//       .populate('user', 'name email phone profilePicture')
-//       .sort({ createdAt: -1 });
-
-//     const formattedPharmacies = pharmacies.map(pharmacy => ({
-//       id: pharmacy._id,
-//       userId: pharmacy.user._id,
-//       name: pharmacy.pharmacyName,
-//       owner: pharmacy.user.name,
-//       email: pharmacy.user.email,
-//       phone: pharmacy.user.phone,
-//       profilePicture: pharmacy.user.profilePicture,
-//       licenseNumber: pharmacy.licenseNumber,
-//       pharmacyPhone: pharmacy.phone,
-//       pharmacyEmail: pharmacy.email,
-//       address: pharmacy.address,
-//       deliveryAvailable: pharmacy.deliveryAvailable,
-//       deliveryRadius: pharmacy.deliveryRadius,
-//       businessHours: pharmacy.businessHours,
-//       isVerified: pharmacy.isVerified,
-//       appliedDate: pharmacy.createdAt,
-//       rejectionReason: pharmacy.rejectionReason, // ✅ ADD THIS
-//       rejectedAt: pharmacy.rejectedAt // ✅ ADD THIS
-//     }));
-
-//     res.status(200).json({
-//       success: true,
-//       data: formattedPharmacies
-//     });
-//   } catch (error) {
-//     console.error('Get pharmacies error:', error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error fetching pharmacies',
-//       error: error.message
-//     });
-//   }
-// };
-
-// =======================
-// Get All Pharmacies (Admin)
-// =======================
 const getPharmacies = async (req, res) => {
   try {
     const { status } = req.query;
-    
+
     let query = {};
     if (status === 'pending') {
       query.isVerified = false;
+      query.rejectionReason = ""; // ✅ Empty string means not rejected
     } else if (status === 'verified') {
       query.isVerified = true;
+    } else if (status === 'rejected') {
+      query.rejectionReason = { $ne: "" }; // ✅ Has rejection reason (not empty)
     }
 
     const pharmacies = await Pharmacy.find(query)
-      .populate('user', 'name email phone')
+      .populate('user', 'name email phone profilePicture')
       .sort({ createdAt: -1 });
 
-    // ✅ FIX: Check if user exists
-    const formattedPharmacies = pharmacies.map(pharmacy => {
-      if (!pharmacy || !pharmacy.user) {
-        console.log('⚠️ Skipping pharmacy with null user:', pharmacy?._id);
-        return null;
-      }
-      
-      return {
-        _id: pharmacy._id,
-        userId: pharmacy.user._id,
-        name: pharmacy.user.name || 'Unknown',
-        email: pharmacy.user.email || '',
-        phone: pharmacy.user.phone || '',
-        pharmacyName: pharmacy.pharmacyName || '',
-        licenseNumber: pharmacy.licenseNumber || '',
-        address: pharmacy.address || {},
-        deliveryAvailable: pharmacy.deliveryAvailable || false,
-        isVerified: pharmacy.isVerified || false,
-        rejectionReason: pharmacy.rejectionReason || '',
-        createdAt: pharmacy.createdAt
-      };
-    }).filter(pharmacy => pharmacy !== null);
+    const formattedPharmacies = pharmacies.map(pharmacy => ({
+      id: pharmacy._id,
+      userId: pharmacy.user._id,
+      name: pharmacy.pharmacyName,
+      owner: pharmacy.user.name,
+      email: pharmacy.user.email,
+      phone: pharmacy.user.phone,
+      profilePicture: pharmacy.user.profilePicture,
+      licenseNumber: pharmacy.licenseNumber,
+      pharmacyPhone: pharmacy.phone,
+      pharmacyEmail: pharmacy.email,
+      address: pharmacy.address,
+      deliveryAvailable: pharmacy.deliveryAvailable,
+      deliveryRadius: pharmacy.deliveryRadius,
+      businessHours: pharmacy.businessHours,
+      isVerified: pharmacy.isVerified,
+      appliedDate: pharmacy.createdAt,
+      rejectionReason: pharmacy.rejectionReason, // ✅ ADD THIS
+      rejectedAt: pharmacy.rejectedAt // ✅ ADD THIS
+    }));
 
     res.status(200).json({
       success: true,
-      count: formattedPharmacies.length,
       data: formattedPharmacies
     });
-
   } catch (error) {
-    console.error("Get pharmacies error:", error);
+    console.error('Get pharmacies error:', error);
     res.status(500).json({
       success: false,
-      message: "Error fetching pharmacies",
+      message: 'Error fetching pharmacies',
       error: error.message
     });
   }
 };
+
+
 
 
 const verifyPharmacy = async (req, res) => {
@@ -564,120 +509,58 @@ const verifyPharmacy = async (req, res) => {
 // =======================
 // Laboratory Management
 // =======================
-// const getLaboratories = async (req, res) => {
-//   try {
-//     const { status } = req.query;
-
-//     let query = {};
-//     if (status === 'pending') {
-//       query.isVerified = false;
-//       query.rejectionReason = ""; // ✅ Empty string means not rejected
-//     } else if (status === 'verified') {
-//       query.isVerified = true;
-//     } else if (status === 'rejected') {
-//       query.rejectionReason = { $ne: "" }; // ✅ Has rejection reason
-//     }
-
-//     const laboratories = await Laboratory.find(query)
-//       .populate('user', 'name email phone profilePicture')
-//       .sort({ createdAt: -1 });
-
-//     const formattedLabs = laboratories.map(lab => ({
-//       id: lab._id,
-//       userId: lab.user._id,
-//       name: lab.labName,
-//       owner: lab.user.name,
-//       email: lab.user.email,
-//       phone: lab.user.phone,
-//       profilePicture: lab.user.profilePicture,
-//       licenseNumber: lab.licenseNumber,
-//       labPhone: lab.phone,
-//       labEmail: lab.email,
-//       address: lab.address,
-//       homeCollectionAvailable: lab.homeCollectionAvailable,
-//       testsAvailable: lab.testsAvailable,
-//       businessHours: lab.businessHours,
-//       isVerified: lab.isVerified,
-//       appliedDate: lab.createdAt,
-//       rejectionReason: lab.rejectionReason, // ✅ ADD THIS
-//       rejectedAt: lab.rejectedAt // ✅ ADD THIS
-//     }));
-
-//     res.status(200).json({
-//       success: true,
-//       data: formattedLabs
-//     });
-//   } catch (error) {
-//     console.error('Get laboratories error:', error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error fetching laboratories',
-//       error: error.message
-//     });
-//   }
-// };
-
-
-
-// =======================
-// Get All Laboratories (Admin)
-// =======================
 const getLaboratories = async (req, res) => {
   try {
     const { status } = req.query;
-    
+
     let query = {};
     if (status === 'pending') {
       query.isVerified = false;
+      query.rejectionReason = ""; // ✅ Empty string means not rejected
     } else if (status === 'verified') {
       query.isVerified = true;
+    } else if (status === 'rejected') {
+      query.rejectionReason = { $ne: "" }; // ✅ Has rejection reason
     }
 
     const laboratories = await Laboratory.find(query)
-      .populate('user', 'name email phone')
+      .populate('user', 'name email phone profilePicture')
       .sort({ createdAt: -1 });
 
-    // ✅ FIX: Check if user exists
-    const formattedLaboratories = laboratories.map(lab => {
-      if (!lab || !lab.user) {
-        console.log('⚠️ Skipping laboratory with null user:', lab?._id);
-        return null;
-      }
-      
-      return {
-        _id: lab._id,
-        userId: lab.user._id,
-        name: lab.user.name || 'Unknown',
-        email: lab.user.email || '',
-        phone: lab.user.phone || '',
-        labName: lab.labName || '',
-        licenseNumber: lab.licenseNumber || '',
-        address: lab.address || {},
-        homeCollectionAvailable: lab.homeCollectionAvailable || false,
-        isVerified: lab.isVerified || false,
-        rejectionReason: lab.rejectionReason || '',
-        createdAt: lab.createdAt
-      };
-    }).filter(lab => lab !== null);
+    const formattedLabs = laboratories.map(lab => ({
+      id: lab._id,
+      userId: lab.user._id,
+      name: lab.labName,
+      owner: lab.user.name,
+      email: lab.user.email,
+      phone: lab.user.phone,
+      profilePicture: lab.user.profilePicture,
+      licenseNumber: lab.licenseNumber,
+      labPhone: lab.phone,
+      labEmail: lab.email,
+      address: lab.address,
+      homeCollectionAvailable: lab.homeCollectionAvailable,
+      testsAvailable: lab.testsAvailable,
+      businessHours: lab.businessHours,
+      isVerified: lab.isVerified,
+      appliedDate: lab.createdAt,
+      rejectionReason: lab.rejectionReason, // ✅ ADD THIS
+      rejectedAt: lab.rejectedAt // ✅ ADD THIS
+    }));
 
     res.status(200).json({
       success: true,
-      count: formattedLaboratories.length,
-      data: formattedLaboratories
+      data: formattedLabs
     });
-
   } catch (error) {
-    console.error("Get laboratories error:", error);
+    console.error('Get laboratories error:', error);
     res.status(500).json({
       success: false,
-      message: "Error fetching laboratories",
+      message: 'Error fetching laboratories',
       error: error.message
     });
   }
 };
-
-
-
 const verifyLaboratory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -827,115 +710,53 @@ const rejectDoctor = async (req, res) => {
 };
 
 // In the getDoctors function - update to include rejected status:
-// const getDoctors = async (req, res) => {
-//   try {
-//     const { status } = req.query; // 'pending', 'verified', 'rejected'
-
-//     let query = {};
-//     if (status === 'pending') {
-//       query.isVerified = false;
-//       query.rejectionReason = ""; // Empty string means not rejected
-//     } else if (status === 'verified') {
-//       query.isVerified = true;
-//     } else if (status === 'rejected') {
-//       query.rejectionReason = { $ne: "" }; // Has rejection reason (not empty)
-//     }
-
-//     const doctors = await Doctor.find(query)
-//       .populate('user', 'name email phone profilePicture')
-//       .sort({ createdAt: -1 });
-
-//     const formattedDoctors = doctors.map(doctor => ({
-//       id: doctor._id,
-//       userId: doctor.user._id,
-//       name: doctor.user.name,
-//       email: doctor.user.email,
-//       phone: doctor.user.phone,
-//       profilePicture: doctor.user.profilePicture,
-//       specialization: doctor.specialization,
-//       experience: `${doctor.experience} years`,
-//       licenseNumber: doctor.licenseNumber,
-//       consultationFee: doctor.consultationFee,
-//       qualifications: doctor.qualifications,
-//       bio: doctor.bio,
-//       isVerified: doctor.isVerified,
-//       appliedDate: doctor.createdAt,
-//       certificates: doctor.certificates,
-//       rejectionReason: doctor.rejectionReason,
-//       rejectedAt: doctor.rejectedAt
-//     }));
-
-//     res.status(200).json({
-//       success: true,
-//       data: formattedDoctors
-//     });
-//   } catch (error) {
-//     console.error('Get doctors error:', error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error fetching doctors',
-//       error: error.message
-//     });
-//   }
-// };
-
-// =======================
-// Get All Doctors (Admin)
-// =======================
 const getDoctors = async (req, res) => {
   try {
-    const { status } = req.query;
-    
+    const { status } = req.query; // 'pending', 'verified', 'rejected'
+
     let query = {};
     if (status === 'pending') {
       query.isVerified = false;
+      query.rejectionReason = ""; // Empty string means not rejected
     } else if (status === 'verified') {
       query.isVerified = true;
+    } else if (status === 'rejected') {
+      query.rejectionReason = { $ne: "" }; // Has rejection reason (not empty)
     }
 
     const doctors = await Doctor.find(query)
       .populate('user', 'name email phone profilePicture')
       .sort({ createdAt: -1 });
 
-    // ✅ FIX: Check if user exists before accessing properties
-    const formattedDoctors = doctors.map(doctor => {
-      // Skip if doctor or user is null
-      if (!doctor || !doctor.user) {
-        console.log('⚠️ Skipping doctor with null user:', doctor?._id);
-        return null;
-      }
-      
-      return {
-        _id: doctor._id,
-        userId: doctor.user._id,
-        name: doctor.user.name || 'Unknown',
-        email: doctor.user.email || '',
-        phone: doctor.user.phone || '',
-        profilePicture: doctor.user.profilePicture || '',
-        specialization: doctor.specialization || '',
-        experience: doctor.experience || 0,
-        licenseNumber: doctor.licenseNumber || '',
-        consultationFee: doctor.consultationFee || 0,
-        isVerified: doctor.isVerified || false,
-        rejectionReason: doctor.rejectionReason || '',
-        createdAt: doctor.createdAt,
-        rejectionReason: doctor.rejectionReason || '',
-        rejectedAt: doctor.rejectedAt || null,
-        verifiedAt: doctor.verifiedAt || null
-      };
-    }).filter(doctor => doctor !== null); // Remove null entries
+    const formattedDoctors = doctors.map(doctor => ({
+      id: doctor._id,
+      userId: doctor.user._id,
+      name: doctor.user.name,
+      email: doctor.user.email,
+      phone: doctor.user.phone,
+      profilePicture: doctor.user.profilePicture,
+      specialization: doctor.specialization,
+      experience: `${doctor.experience} years`,
+      licenseNumber: doctor.licenseNumber,
+      consultationFee: doctor.consultationFee,
+      qualifications: doctor.qualifications,
+      bio: doctor.bio,
+      isVerified: doctor.isVerified,
+      appliedDate: doctor.createdAt,
+      certificates: doctor.certificates,
+      rejectionReason: doctor.rejectionReason,
+      rejectedAt: doctor.rejectedAt
+    }));
 
     res.status(200).json({
       success: true,
-      count: formattedDoctors.length,
       data: formattedDoctors
     });
-
   } catch (error) {
-    console.error("Get doctors error:", error);
+    console.error('Get doctors error:', error);
     res.status(500).json({
       success: false,
-      message: "Error fetching doctors",
+      message: 'Error fetching doctors',
       error: error.message
     });
   }

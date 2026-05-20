@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Tests = () => {
   const [tests, setTests] = useState([]);
@@ -24,7 +25,7 @@ const Tests = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/lab/tests', {
+      const response = await axios.get(`${Backend_Url}/lab/tests`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -51,7 +52,7 @@ const Tests = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:8085/api/v1/lab/tests', newTest, {
+      const response = await axios.post(`${Backend_Url}/lab/tests`, newTest, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -76,7 +77,7 @@ const Tests = () => {
         return;
       }
       
-      await axios.put(`http://localhost:8085/api/v1/lab/tests/${testId}/status`, 
+      await axios.put(`${Backend_Url}/lab/tests/${testId}/status`, 
         { isActive: !isActive },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -137,7 +138,7 @@ const Tests = () => {
               />
               <input
                 type="number"
-                placeholder="Price () *"
+                placeholder="Price (Rs.) *"
                 value={newTest.price}
                 onChange={(e) => setNewTest({...newTest, price: e.target.value})}
                 className="border p-2 rounded w-full"
@@ -188,7 +189,7 @@ const Tests = () => {
                       <p className="text-gray-600 text-sm">{test.category}</p>
                       <p className="text-sm text-gray-500">{test.description}</p>
                       <div className="flex space-x-4 mt-1">
-                        <span className="font-semibold">{test.price}</span>
+                        <span className="font-semibold">Rs.{test.price}</span>
                         <span className="text-gray-500">{test.duration}</span>
                       </div>
                     </div>

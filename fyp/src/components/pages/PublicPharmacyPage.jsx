@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
 import Header from '../Homepage/Header';
 import Footer from '../Homepage/Footer';
+import { Backend_Url } from './../../../utils/utils';
 
 const PublicPharmacyPage = () => {
   const [products, setProducts] = useState([]);
@@ -24,7 +25,7 @@ const PublicPharmacyPage = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8085/api/v1/public/pharmacy-products', {
+      const response = await axios.get(`${Backend_Url}/public/pharmacy-products`, {
         params: { 
           category: category || undefined,
           search: search || undefined,
@@ -44,7 +45,7 @@ const PublicPharmacyPage = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:8085/api/v1/public/pharmacy-products');
+      const response = await axios.get(`${Backend_Url}/public/pharmacy-products`);
       const uniqueCategories = [...new Set(response.data.data.map(p => p.category))].filter(Boolean);
       setCategories(uniqueCategories);
     } catch (err) {
@@ -218,7 +219,7 @@ const PublicPharmacyPage = () => {
                             <span className={`line-through text-sm ${
                               theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
                             }`}>
-                              {product.price}
+                              Rs.{product.price}
                             </span>
                             <span className={`ml-2 font-bold text-xl ${
                               theme === 'dark' ? 'text-green-400' : 'text-green-600'
@@ -230,7 +231,7 @@ const PublicPharmacyPage = () => {
                           <span className={`font-bold text-xl ${
                             theme === 'dark' ? 'text-white' : 'text-gray-800'
                           }`}>
-                            {product.price}
+                           Rs. {product.price}
                           </span>
                         )}
                       </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ThemeContext } from '../../context/ThemeContext';
+import { Backend_Url } from './../../../utils/utils';
 
 const Hero = () => {
   const { theme } = useContext(ThemeContext);
@@ -18,7 +19,7 @@ const Hero = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get('http://localhost:8085/api/v1/public/stats');
+      const response = await axios.get(`${Backend_Url}/public/stats`);
       
       if (response.data.success) {
         setStats({

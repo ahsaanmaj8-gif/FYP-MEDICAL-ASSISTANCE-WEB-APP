@@ -4,6 +4,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 import axios from 'axios';
 import Header from '../Homepage/Header';
 import Footer from '../Homepage/Footer';
+import { Backend_Url } from './../../../utils/utils';
 
 const DoctorsPage = () => {
   const [doctors, setDoctors] = useState([]);
@@ -64,7 +65,7 @@ const DoctorsPage = () => {
 
       console.log('Fetching with params:', params); // Debug log
 
-      const response = await axios.get('http://localhost:8085/api/v1/public/doctors', {
+      const response = await axios.get(`${Backend_Url}/public/doctors`, {
         params: params
       });
       
@@ -80,7 +81,7 @@ const DoctorsPage = () => {
 
   const fetchSpecialties = async () => {
     try {
-      const response = await axios.get('http://localhost:8085/api/v1/public/specialties');
+      const response = await axios.get(`${Backend_Url}/public/specialties`);
       if (response.data.success) {
         setSpecialties(response.data.data);
       }
@@ -288,7 +289,7 @@ const DoctorsPage = () => {
                         : 'border-gray-300 text-gray-700 hover:bg-gray-100'
                     }`}
                   >
-                    Clear All
+                    Clear Filters
                   </button>
                   <button
                     onClick={fetchDoctors}

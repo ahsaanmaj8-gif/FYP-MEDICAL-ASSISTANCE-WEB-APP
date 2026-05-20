@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { ThemeContext } from '../../../context/ThemeContext';
+import { Backend_Url } from './../../../../utils/utils';
 
 const PrescriptionDetails = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ const PrescriptionDetails = () => {
       const token = localStorage.getItem('token');
       
       const response = await axios.get(
-        `http://localhost:8085/api/v1/doctor/prescriptions/${id}`,
+        `${Backend_Url}/doctor/prescriptions/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

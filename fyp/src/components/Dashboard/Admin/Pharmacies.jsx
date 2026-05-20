@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Pharmacies = () => {
   const [activeTab, setActiveTab] = useState('pending');
@@ -10,7 +11,7 @@ const Pharmacies = () => {
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [selectedPharmacy, setSelectedPharmacy] = useState(null);
 
-  const API_BASE_URL = 'http://localhost:8085/api/v1/admin';
+  const API_BASE_URL = `${Backend_Url}/admin`;
 
   const getAuthToken = () => localStorage.getItem('token');
 

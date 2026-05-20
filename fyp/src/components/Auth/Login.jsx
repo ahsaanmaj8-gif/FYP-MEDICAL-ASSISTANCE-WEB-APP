@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../utils/utils';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -27,7 +28,7 @@ const Login = () => {
       setLoading(true);
 
       const response = await axios.post(
-        'http://localhost:8085/api/v1/auth/login',
+        `${Backend_Url}/auth/login`,
         { email, password }
       );
 

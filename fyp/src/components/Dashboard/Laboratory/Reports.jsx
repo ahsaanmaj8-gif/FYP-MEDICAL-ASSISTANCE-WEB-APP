@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Reports = () => {
   const [appointments, setAppointments] = useState([]);
@@ -22,7 +23,7 @@ const Reports = () => {
       const token = localStorage.getItem('token');
       
       // Fetch appointments WITHOUT reports (no reportUrl) AND status not 'completed'
-      const response = await axios.get('http://localhost:8085/api/v1/lab/appointments', {
+      const response = await axios.get(`${Backend_Url}/lab/appointments`, {
         headers: { Authorization: `Bearer ${token}` },
         params: { 
           limit: 50 
@@ -74,7 +75,7 @@ const Reports = () => {
       formData.append('reportNotes', reportData.reportNotes);
 
       const response = await axios.post(
-        `http://localhost:8085/api/v1/lab/appointments/${selectedAppointment}/report`,
+        `${Backend_Url}/lab/appointments/${selectedAppointment}/report`,
         formData,
         { 
           headers: { 
@@ -101,7 +102,7 @@ const Reports = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://localhost:8085/api/v1/lab/appointments/${appointmentId}/status`,
+        `${Backend_Url}/lab/appointments/${appointmentId}/status`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );

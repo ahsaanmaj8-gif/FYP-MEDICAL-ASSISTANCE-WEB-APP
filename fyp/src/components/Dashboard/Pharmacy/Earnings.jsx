@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Earnings = () => {
   const [stats, setStats] = useState({
@@ -18,7 +19,7 @@ const Earnings = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/pharmacy/earnings', {
+      const response = await axios.get(`${Backend_Url}/pharmacy/earnings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -59,7 +60,7 @@ const Earnings = () => {
             <div className="text-3xl mr-4">💰</div>
             <div>
               <p className="text-gray-600 text-sm">Total Earnings</p>
-              <p className="text-2xl font-bold">{stats.totalEarnings.toFixed(2)}</p>
+              <p className="text-2xl font-bold">Rs.{stats.totalEarnings.toFixed(2)}</p>
             </div>
           </div>
         </div>
@@ -70,7 +71,7 @@ const Earnings = () => {
             <div className="text-3xl mr-4">📈</div>
             <div>
               <p className="text-gray-600 text-sm">This Month</p>
-              <p className="text-2xl font-bold">{stats.thisMonth.toFixed(2)}</p>
+              <p className="text-2xl font-bold">Rs.{stats.thisMonth.toFixed(2)}</p>
             </div>
           </div>
         </div>
@@ -104,7 +105,7 @@ const Earnings = () => {
         <div className="space-y-3">
           <div className="flex justify-between">
             <span>Total Revenue:</span>
-            <span className="font-bold">{stats.totalEarnings.toFixed(2)}</span>
+            <span className="font-bold">Rs.{stats.totalEarnings.toFixed(2)}</span>
           </div>
           <div className="flex justify-between">
             <span>This Month:</span>

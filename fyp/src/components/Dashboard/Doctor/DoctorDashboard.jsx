@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const DoctorDashboard = () => {
   const [stats, setStats] = useState({
@@ -33,7 +34,7 @@ const DoctorDashboard = () => {
       console.log('Fetching doctor dashboard data...');
 
       // Fetch doctor profile first to get name
-      const profileRes = await axios.get('http://localhost:8085/api/v1/doctor/profile', {
+      const profileRes = await axios.get(`${Backend_Url}/doctor/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -47,7 +48,7 @@ const DoctorDashboard = () => {
       }
 
       // Fetch dashboard stats
-      const statsRes = await axios.get('http://localhost:8085/api/v1/doctor/dashboard', {
+      const statsRes = await axios.get(`${Backend_Url}/doctor/dashboard`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -65,7 +66,7 @@ const DoctorDashboard = () => {
       }
 
       // Fetch today's appointments
-      const aptRes = await axios.get('http://localhost:8085/api/v1/doctor/appointments?filter=today', {
+      const aptRes = await axios.get(`${Backend_Url}/doctor/appointments?filter=today`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -246,7 +247,7 @@ const DoctorDashboard = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm">Monthly Earnings</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">${stats.monthlyEarnings}</p>
+              <p className="text-3xl font-bold text-gray-900 mt-2">Rs.{stats.monthlyEarnings}</p>
             </div>
             <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl text-white">
               💰

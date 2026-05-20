@@ -4,6 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import Header from '../Homepage/Header';
 import Footer from '../Homepage/Footer';
+import { Backend_Url } from './../../../utils/utils';
 
 const BookAppointment = () => {
   const { doctorId } = useParams();
@@ -43,7 +44,7 @@ const BookAppointment = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:8085/api/v1/appointments/availability/${doctorId}`,
+        `${Backend_Url}/appointments/availability/${doctorId}`,
         { params: { date: selectedDate } }
       );
 
@@ -87,7 +88,7 @@ const BookAppointment = () => {
 
       // 1. Initiate JazzCash payment
       const paymentResponse = await axios.post(
-        'http://localhost:8085/api/v1/appointments/payment/jazzcash/initiate',
+        `${Backend_Url}/appointments/payment/jazzcash/initiate`,
         {
           amount: doctor.consultationFee,
           orderId: `APT_${Date.now()}`,
@@ -99,7 +100,7 @@ const BookAppointment = () => {
       if (paymentResponse.data.success) {
         // 2. Book appointment after payment
         const appointmentResponse = await axios.post(
-          'http://localhost:8085/api/v1/appointments/book',
+          `${Backend_Url}/appointments/book`,
           {
             doctorId,
             appointmentDate: selectedDate,

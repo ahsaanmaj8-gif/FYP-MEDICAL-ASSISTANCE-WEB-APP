@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Prescriptions = () => {
   const [prescriptions, setPrescriptions] = useState([]);
@@ -15,7 +16,7 @@ const Prescriptions = () => {
   const fetchPrescriptions = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/patient/prescriptions', {
+      const response = await axios.get(`${Backend_Url}/patient/prescriptions`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

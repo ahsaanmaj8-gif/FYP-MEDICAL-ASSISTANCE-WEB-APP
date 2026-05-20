@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -18,7 +19,7 @@ const Orders = () => {
       const token = localStorage.getItem('token');
       console.log('Fetching orders with token:', token ? 'Present' : 'Missing');
       
-      const response = await axios.get('http://localhost:8085/api/v1/pharmacy/orders', {
+      const response = await axios.get(`${Backend_Url}/pharmacy/orders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -42,7 +43,7 @@ const Orders = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        `http://localhost:8085/api/v1/pharmacy/orders/${orderId}/status`,
+        `${Backend_Url}/pharmacy/orders/${orderId}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -96,7 +97,7 @@ const Orders = () => {
                   <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
                     {order.status}
                   </span>
-                  <p className="text-xl font-bold mt-2">{order.totalAmount}</p>
+                  <p className="text-xl font-bold mt-2">Rs.{order.totalAmount}</p>
                 </div>
               </div>
 
@@ -106,7 +107,7 @@ const Orders = () => {
                   {order.items.map((item, index) => (
                     <div key={index} className="flex justify-between text-sm">
                       <span>{item.medicine?.name} x{item.quantity}</span>
-                      <span>{item.price * item.quantity}</span>
+                      <span>Rs.{item.price * item.quantity}</span>
                     </div>
                   ))}
                 </div>

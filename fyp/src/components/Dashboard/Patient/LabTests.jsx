@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const LabTests = () => {
   const [labTests, setLabTests] = useState([]);
@@ -24,7 +25,7 @@ const LabTests = () => {
 
       console.log('Fetching lab tests...');
       
-      const response = await axios.get('http://localhost:8085/api/v1/patient/lab-tests', {
+      const response = await axios.get(`${Backend_Url}/patient/lab-tests`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -176,7 +177,7 @@ const LabTests = () => {
                 
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Amount:</span>
-                  <span className="font-bold text-teal-600">${test.amount || '0'}</span>
+                  <span className="font-bold text-teal-600">Rs.{test.amount || '0'}</span>
                 </div>
                 
                 <div className="flex justify-between text-sm">

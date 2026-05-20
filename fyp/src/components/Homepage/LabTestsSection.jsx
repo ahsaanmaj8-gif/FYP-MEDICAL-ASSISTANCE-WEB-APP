@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ThemeContext } from './../../context/ThemeContext';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../utils/utils';
 
 const LabTestsSection = () => {
   const [tests, setTests] = useState([]);
@@ -19,7 +20,7 @@ const LabTestsSection = () => {
   const fetchLabTests = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8085/api/v1/public/lab-tests', {
+      const response = await axios.get(`${Backend_Url}/public/lab-tests`, {
         params: { limit: 6 }
       });
       
@@ -251,7 +252,7 @@ const LabTestsSection = () => {
                       <span className={`font-bold text-xl ${
                         theme === 'dark' ? 'text-white' : 'text-gray-800'
                       }`}>
-                        {test.price}
+                        Rs.{test.price}
                       </span>
                       
 

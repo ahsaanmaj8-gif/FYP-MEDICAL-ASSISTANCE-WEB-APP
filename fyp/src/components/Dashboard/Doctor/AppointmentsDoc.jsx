@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { Backend_Url } from './../../../../utils/utils';
 
 const AppointmentsDoc = () => {
   const [activeTab, setActiveTab] = useState('today');
@@ -17,7 +18,7 @@ const AppointmentsDoc = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:8085/api/v1/doctor/appointments?filter=${activeTab}`, {
+      const response = await axios.get(`${Backend_Url}/doctor/appointments?filter=${activeTab}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -38,7 +39,7 @@ const AppointmentsDoc = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        `http://localhost:8085/api/v1/doctor/appointments/${id}/status`,
+        `${Backend_Url}/doctor/appointments/${id}/status`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -121,14 +122,14 @@ const AppointmentsDoc = () => {
             
             // 1. Update status to in-progress
             await axios.put(
-              `http://localhost:8085/api/v1/doctor/appointments/${apt._id}/status`,
+              `${Backend_Url}/doctor/appointments/${apt._id}/status`,
               { status: 'in-progress' },
               { headers: { Authorization: `Bearer ${token}` } }
             );
             
             // 2. Get Jitsi meeting URL
             const response = await axios.get(
-              `http://localhost:8085/api/v1/video/appointment/${apt._id}/room`,
+              `${Backend_Url}/video/appointment/${apt._id}/room`,
               { headers: { Authorization: `Bearer ${token}` } }
             );
             

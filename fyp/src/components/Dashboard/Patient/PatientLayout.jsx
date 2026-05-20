@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { Backend_Url } from './../../../../utils/utils';
 
 const PatientLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -24,7 +25,7 @@ const PatientLayout = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:8085/api/v1/patient/profile', {
+      const response = await axios.get(`${Backend_Url}/patient/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import Header from '../Homepage/Header';
 import Footer from '../Homepage/Footer';
 import { ThemeContext } from './../../context/ThemeContext';
+import { Backend_Url } from './../../../utils/utils';
 
 const PublicLabTestsPage = () => {
   const { theme } = useContext(ThemeContext);
@@ -23,7 +24,7 @@ const PublicLabTestsPage = () => {
   const fetchTests = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8085/api/v1/public/lab-tests', {
+      const response = await axios.get(`${Backend_Url}/public/lab-tests`, {
         params: { 
           category: category || undefined,
           search: search || undefined,
@@ -44,7 +45,7 @@ const PublicLabTestsPage = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:8085/api/v1/public/lab-tests?limit=100');
+      const response = await axios.get(`${Backend_Url}/public/lab-tests?limit=100`);
       if (response.data.success) {
         const uniqueCategories = [...new Set(response.data.data
           .map(t => t.category)
@@ -202,7 +203,7 @@ const PublicLabTestsPage = () => {
 
                     <div className="flex justify-between items-center">
                       <span className="font-bold text-xl">
-                        {test.price || 'Contact for price'}
+                        Rs.{test.price || 'Contact for price'}
                       </span>
                       
                       <button

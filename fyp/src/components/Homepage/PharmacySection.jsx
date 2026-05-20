@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from './../../context/ThemeContext';
 import axios from 'axios';
+import { Backend_Url } from './../../../utils/utils';
 
 const PharmacySection = () => {
   const [products, setProducts] = useState([]);
@@ -17,7 +18,7 @@ const PharmacySection = () => {
     try {
       setLoading(true);
       // Use public endpoint for featured medicines
-      const response = await axios.get('http://localhost:8085/api/v1/public/medicines/featured', {
+      const response = await axios.get(`${Backend_Url}/public/medicines/featured`, {
         params: { limit: 3 }
       });
       
@@ -248,7 +249,7 @@ const PharmacySection = () => {
                             <span className={`line-through text-sm ${
                               theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
                             }`}>
-                              {product.price}
+                              Rs.{product.price}
                             </span>
                             <span className={`ml-2 font-bold ${
                               theme === 'dark' ? 'text-green-400' : 'text-green-600'
@@ -265,7 +266,7 @@ const PharmacySection = () => {
                           <span className={`font-bold ${
                             theme === 'dark' ? 'text-white' : 'text-gray-800'
                           }`}>
-                            {product.price}
+                            Rs.{product.price}
                           </span>
                         )}
                       </div>
@@ -311,16 +312,16 @@ const PharmacySection = () => {
               </Link>
             </div>
             
-            <div className="mt-12 text-center">
-              <div className={`inline-flex items-center space-x-2 px-6 py-3 rounded-full ${
+            {/* <div className="mt-12 text-center"> */}
+              {/* <div className={`inline-flex items-center space-x-2 px-6 py-3 rounded-full ${
                 theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'
               }`}>
                 <span className={theme === 'dark' ? 'text-green-400' : 'text-green-600'}>🚚</span>
                 <span className={theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}>
                   Free delivery on orders above 50
                 </span>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
           </>
         )}
       </div>

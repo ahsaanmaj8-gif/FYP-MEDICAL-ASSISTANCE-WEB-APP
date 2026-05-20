@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const DoctorLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -28,7 +29,7 @@ const DoctorLayout = () => {
       }
 
       // Fetch doctor profile
-      const profileRes = await axios.get('http://localhost:8085/api/v1/doctor/profile', {
+      const profileRes = await axios.get(`${Backend_Url}/doctor/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -43,7 +44,7 @@ const DoctorLayout = () => {
       }
 
       // Fetch total patients count
-      const patientsRes = await axios.get('http://localhost:8085/api/v1/doctor/patients', {
+      const patientsRes = await axios.get(`${Backend_Url}/doctor/patients`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

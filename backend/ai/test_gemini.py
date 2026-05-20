@@ -1,31 +1,33 @@
-# test_gemini.py - Test Gemini API connectivity
-import google.generativeai as genai
+import os
+from dotenv import load_dotenv
+from openai import OpenAI
 
-# Your API key
-load_dotenv()  # loads .env file
+load_dotenv()
 
-api_key = os.getenv("GOOGLE_API_KEY")
+api_key = os.getenv("XAI_API_KEY")
 
-print("🔧 Testing Gemini API...")
+print("🔧 Testing Grok API...")
 
 try:
-    # Configure the API
-    genai.configure(api_key=API_KEY)
+    client = OpenAI(
+        api_key=api_key,
+        base_url="https://api.x.ai/v1"   # important for Grok
+    )
+
     print("✅ API configured successfully")
 
-    # List available models
-    print("\n📋 Available models:")
-    for model in genai.list_models():
-        if 'generateContent' in model.supported_generation_methods:
-            print(f"  - {model.name}")
+    print("\n🤖 Testing Grok model...")
 
-    # Test with gemini-1.5-flash
-    print("\n🤖 Testing gemini-1.5-flash...")
-    # model = genai.GenerativeModel("gemini-1.5-flash")
-    model = genai.GenerativeModel("gemini-2.0-flash")
-    response = model.generate_content("Hello! Can you hear me?")
-    
-    print(f"✅ Success! Response: {response.text}")
+    response = client.chat.completions.create(
+        model="grok-1.5",   # or grok-1 if your key supports it
+        messages=[
+            {"role": "user", "content": "Hello! Can you hear me?"}
+        ],
+        max_tokens=100
+    )
+
+    print("✅ Success! Response:")
+    print(response.choices[0].message.content)
 
 except Exception as e:
     print(f"❌ Error: {e}")

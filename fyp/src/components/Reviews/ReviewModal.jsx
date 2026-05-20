@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import StarRating from './StarRating';
+import { Backend_Url } from './../../../utils/utils';
 
 const ReviewModal = ({ isOpen, onClose, targetType, targetId, targetName, onReviewSubmitted }) => {
   const [rating, setRating] = useState(0);
@@ -30,7 +31,7 @@ const checkIfCanReview = async () => {
     }
 
     const response = await axios.get(
-      `http://localhost:8085/api/v1/reviews/check/${targetType}/${targetId}`,
+      `${Backend_Url}/reviews/check/${targetType}/${targetId}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
@@ -74,7 +75,7 @@ const checkIfCanReview = async () => {
 
     const response = await axios.post(
       
-      'http://localhost:8085/api/v1/reviews',
+      `${Backend_Url}/reviews`,
       {
         targetType,
         targetId,

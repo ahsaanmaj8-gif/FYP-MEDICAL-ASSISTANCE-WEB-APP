@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../utils/utils';
 
 const MedicineOrderPage = () => {
   const { productId } = useParams();
@@ -42,7 +43,7 @@ const fetchProduct = async () => {
     
     // PUBLIC endpoint - no token required
     const response = await axios.get(
-      `http://localhost:8085/api/v1/public/medicines/${productId}`
+      `${Backend_Url}/public/medicines/${productId}`
     );
     
     if (response.data.success) {
@@ -90,7 +91,7 @@ const fetchProductWithAuth = async () => {
     if (!token) throw new Error('No token');
     
     const response = await axios.get(
-      `http://localhost:8085/api/v1/public/medicines/${productId}`,
+      `${Backend_Url}/public/medicines/${productId}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     
@@ -110,7 +111,7 @@ const fetchProductWithAuth = async () => {
   const fetchPatientProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/auth/profile', {
+      const response = await axios.get(`${Backend_Url}/auth/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -210,7 +211,7 @@ const handleSubmit = async (e) => {
 
     // Send as JSON
     const response = await axios.post(
-      'http://localhost:8085/api/v1/patient/orders',
+      `${Backend_Url}/patient/orders`,
       orderData,
       {
         headers: {

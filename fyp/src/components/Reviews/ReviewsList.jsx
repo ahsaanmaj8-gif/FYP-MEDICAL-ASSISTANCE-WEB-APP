@@ -18,7 +18,7 @@ const ReviewsList = ({ targetType, targetId }) => {
   const fetchReviews = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8085/api/v1/reviews/${targetType}/${targetId}`
+        `${Backend_Url}/reviews/${targetType}/${targetId}`
       );
 
       if (response.data.success) {

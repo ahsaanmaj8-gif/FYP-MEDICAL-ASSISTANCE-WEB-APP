@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const ProfileDoc = () => {
   const [profile, setProfile] = useState(null);
@@ -19,7 +20,7 @@ const ProfileDoc = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/doctor/profile', {
+      const response = await axios.get(`${Backend_Url}/doctor/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -44,7 +45,7 @@ const ProfileDoc = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        'http://localhost:8085/api/v1/doctor/profile',
+        `${Backend_Url}/doctor/profile`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );

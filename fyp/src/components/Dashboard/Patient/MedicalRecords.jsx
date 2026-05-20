@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const MedicalRecords = () => {
   const [records, setRecords] = useState({
@@ -18,12 +19,12 @@ const MedicalRecords = () => {
       const token = localStorage.getItem('token');
       
       // Fetch prescriptions
-      const presRes = await axios.get('http://localhost:8085/api/v1/patient/prescriptions', {
+      const presRes = await axios.get(`${Backend_Url}/patient/prescriptions`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
       // Fetch lab tests with reports
-      const labRes = await axios.get('http://localhost:8085/api/v1/patient/lab-tests', {
+      const labRes = await axios.get(`${Backend_Url}/patient/lab-tests`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

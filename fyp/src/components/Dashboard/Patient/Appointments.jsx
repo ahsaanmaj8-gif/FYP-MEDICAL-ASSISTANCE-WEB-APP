@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -14,7 +15,7 @@ const Appointments = () => {
   const fetchAppointments = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/patient/appointments', {
+      const response = await axios.get(`${Backend_Url}/patient/appointments`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -37,7 +38,7 @@ const Appointments = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        `http://localhost:8085/api/v1/patient/appointments/${id}/cancel`,
+        `${Backend_Url}/patient/appointments/${id}/cancel`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -170,7 +171,7 @@ const Appointments = () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.get(
-          `http://localhost:8085/api/v1/video/appointment/${apt._id}/room`,
+          `${Backend_Url}/video/appointment/${apt._id}/room`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         

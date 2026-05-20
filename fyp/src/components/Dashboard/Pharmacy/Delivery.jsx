@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Delivery = () => {
   const [orders, setOrders] = useState([]);
@@ -12,7 +13,7 @@ const Delivery = () => {
   const fetchDeliveryOrders = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/pharmacy/orders', {
+      const response = await axios.get(`${Backend_Url}/pharmacy/orders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -35,7 +36,7 @@ const Delivery = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://localhost:8085/api/v1/pharmacy/orders/${orderId}/status`,
+        `${Backend_Url}/pharmacy/orders/${orderId}/status`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );

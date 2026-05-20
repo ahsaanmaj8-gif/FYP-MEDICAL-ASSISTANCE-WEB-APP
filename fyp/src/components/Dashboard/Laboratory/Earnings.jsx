@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Earnings = () => {
   const [earnings, setEarnings] = useState({
@@ -20,7 +21,7 @@ const Earnings = () => {
       setLoading(true);
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `http://localhost:8085/api/v1/lab/earnings?period=${period}`,
+        `${Backend_Url}/lab/earnings?period=${period}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
@@ -69,7 +70,7 @@ const Earnings = () => {
           <div>
             <h2 className="text-2xl font-bold">Total Revenue</h2>
             <p className="text-blue-100">This {period}</p>
-            <div className="text-4xl font-bold mt-4">{earnings.totalAmount}</div>
+            <div className="text-4xl font-bold mt-4">Rs.{earnings.totalAmount}</div>
             <p className="text-green-300 mt-2">{earnings.totalAppointments} appointments</p>
           </div>
           <div className="text-5xl">💰</div>
@@ -93,7 +94,7 @@ const Earnings = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold">{test.totalRevenue}</div>
+                  <div className="font-bold">Rs.{test.totalRevenue}</div>
                   <div className="text-green-500 text-sm">
                     {Math.round((test.totalRevenue / earnings.totalAmount) * 100)}% of total
                   </div>

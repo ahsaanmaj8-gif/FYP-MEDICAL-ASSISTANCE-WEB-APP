@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const LaboratoryDashboard = () => {
   const [stats, setStats] = useState({
@@ -24,10 +25,10 @@ const LaboratoryDashboard = () => {
       setLoading(true);
       const token = localStorage.getItem('token');
       const [statsRes, appointmentsRes] = await Promise.all([
-        axios.get('http://localhost:8085/api/v1/lab/dashboard', {
+        axios.get(`${Backend_Url}/lab/dashboard`, {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('http://localhost:8085/api/v1/lab/appointments?date=' + new Date().toISOString().split('T')[0], {
+        axios.get(`${Backend_Url}/lab/appointments?date=` + new Date().toISOString().split('T')[0], {
           headers: { Authorization: `Bearer ${token}` }
         })
       ]);
@@ -112,7 +113,7 @@ const LaboratoryDashboard = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://localhost:8085/api/v1/lab/appointments/${appointmentId}/status`,
+        `${Backend_Url}/lab/appointments/${appointmentId}/status`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );

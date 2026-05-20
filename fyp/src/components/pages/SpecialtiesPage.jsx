@@ -4,6 +4,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 import axios from 'axios';
 import Header from '../Homepage/Header';
 import Footer from '../Homepage/Footer';
+import { Backend_Url } from './../../../utils/utils';
 
 const SpecialtiesPage = () => {
   const [specialties, setSpecialties] = useState([]);
@@ -20,7 +21,7 @@ const SpecialtiesPage = () => {
     try {
       setLoading(true);
       
-      const response = await axios.get('http://localhost:8085/api/v1/public/specialties');
+      const response = await axios.get(`${Backend_Url}/public/specialties`);
       
       if (response.data.success) {
         setSpecialties(response.data.data);

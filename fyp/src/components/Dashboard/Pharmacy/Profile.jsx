@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const Profilee = () => {
   const [profile, setProfile] = useState(null);
@@ -30,7 +31,7 @@ const Profilee = () => {
       const token = localStorage.getItem('token');
       console.log('Fetching profile with token:', token ? 'Present' : 'Missing');
       
-      const response = await axios.get('http://localhost:8085/api/v1/pharmacy/profile', {
+      const response = await axios.get(`${Backend_Url}/pharmacy/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -73,7 +74,7 @@ const Profilee = () => {
       console.log('Updating profile with data:', formData);
       
       const response = await axios.put(
-        'http://localhost:8085/api/v1/pharmacy/profile',
+        `${Backend_Url}/pharmacy/profile`,
         formData,
         { 
           headers: { 

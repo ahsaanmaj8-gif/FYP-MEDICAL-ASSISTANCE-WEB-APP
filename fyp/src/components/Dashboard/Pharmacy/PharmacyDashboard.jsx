@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Backend_Url } from './../../../../utils/utils';
 
 const PharmacyDashboard = () => {
   const [stats, setStats] = useState({
@@ -20,7 +21,7 @@ const PharmacyDashboard = () => {
   const fetchDashboardStats = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/pharmacy/dashboard-stats', {
+      const response = await axios.get(`${Backend_Url}/pharmacy/dashboard-stats`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

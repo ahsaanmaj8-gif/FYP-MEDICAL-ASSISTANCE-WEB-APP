@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const ScheduleDoc = () => {
   const [schedule, setSchedule] = useState([]);
@@ -17,7 +18,7 @@ const ScheduleDoc = () => {
   const fetchSchedule = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/doctor/schedule', {
+      const response = await axios.get(`${Backend_Url}/doctor/schedule`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -96,7 +97,7 @@ const ScheduleDoc = () => {
       }
 
       const response = await axios.put(
-        'http://localhost:8085/api/v1/doctor/schedule',
+        `${Backend_Url}/doctor/schedule`,
         { availability: updatedSchedule },
         { headers: { Authorization: `Bearer ${token}` } }
       );

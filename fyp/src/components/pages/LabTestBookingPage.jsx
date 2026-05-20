@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../utils/utils';
 
 const LabTestBookingPage = () => {
   const { testId } = useParams();
@@ -29,7 +30,7 @@ const LabTestBookingPage = () => {
   const fetchTestDetails = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:8085/api/v1/public/lab-tests/${testId}`);
+      const response = await axios.get(`${Backend_Url}/public/lab-tests/${testId}`);
       
       if (response.data.success) {
         setTest(response.data.data);
@@ -99,7 +100,7 @@ const LabTestBookingPage = () => {
       };
 
       const response = await axios.post(
-        'http://localhost:8085/api/v1/lab-booking/book',
+        `${Backend_Url}/lab-booking/book`,
         bookingData,
         { 
           headers: { 

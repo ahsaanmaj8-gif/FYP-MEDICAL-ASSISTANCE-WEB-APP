@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { Backend_Url } from './../../../../utils/utils';
 
 const PharmacyLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -31,7 +32,7 @@ const PharmacyLayout = () => {
       }
 
       // Fetch pending orders count
-      const ordersResponse = await axios.get('http://localhost:8085/api/v1/pharmacy/orders', {
+      const ordersResponse = await axios.get(`${Backend_Url}/pharmacy/orders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -41,7 +42,7 @@ const PharmacyLayout = () => {
       }
 
       // Fetch pharmacy name
-      const profileResponse = await axios.get('http://localhost:8085/api/v1/pharmacy/profile', {
+      const profileResponse = await axios.get(`${Backend_Url}/pharmacy/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

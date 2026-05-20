@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from './../../context/ThemeContext';
 import axios from 'axios';
+import { Backend_Url } from './../../../utils/utils';
 
 const TopDoctors = () => {
   const [doctors, setDoctors] = useState([]);
@@ -16,7 +17,7 @@ const TopDoctors = () => {
   const fetchFeaturedDoctors = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8085/api/v1/public/featured-doctors');
+      const response = await axios.get(`${Backend_Url}/public/featured-doctors`);
       
       if (response.data.success) {
         setDoctors(response.data.data);

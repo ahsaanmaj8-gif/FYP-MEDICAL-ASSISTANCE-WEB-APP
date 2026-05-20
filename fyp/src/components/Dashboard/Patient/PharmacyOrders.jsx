@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Backend_Url } from './../../../../utils/utils';
 
 const PharmacyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -14,7 +15,7 @@ const PharmacyOrders = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8085/api/v1/patient/orders', {
+      const response = await axios.get(`${Backend_Url}/patient/orders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -100,7 +101,7 @@ const PharmacyOrders = () => {
                   {order.items?.map((item, idx) => (
                     <div key={idx} className="flex justify-between text-sm">
                       <span>{item.medicine?.name} x{item.quantity}</span>
-                      <span className="font-medium">{item.price * item.quantity}</span>
+                      <span className="font-medium">Rs.{item.price * item.quantity}</span>
                     </div>
                   ))}
                 </div>
@@ -109,7 +110,7 @@ const PharmacyOrders = () => {
               <div className="flex justify-between items-center pt-4 border-t">
                 <div>
                   <p className="text-sm text-gray-600">Total Amount</p>
-                  <p className="text-xl font-bold text-gray-900">{order.totalAmount}</p>
+                  <p className="text-xl font-bold text-gray-900">Rs.{order.totalAmount}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Payment</p>

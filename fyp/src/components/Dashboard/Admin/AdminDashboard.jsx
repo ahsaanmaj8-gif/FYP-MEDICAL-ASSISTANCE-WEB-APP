@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Backend_Url } from './../../../../utils/utils';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
@@ -19,7 +20,7 @@ const AdminDashboard = () => {
   const [recentRegistrations, setRecentRegistrations] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const API_BASE_URL = 'http://localhost:8085/api/v1/admin';
+  const API_BASE_URL = `${Backend_Url}/admin`;
 
   const getAuthToken = () => localStorage.getItem('token');
 
