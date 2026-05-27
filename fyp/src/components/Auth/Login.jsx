@@ -78,9 +78,24 @@ const Login = () => {
   };
 
 return (
-  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 px-4">
+  <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 px-4">
     
+    <div>
+
+    <Link to="/" className="flex flex-col items-center mt-5 mb-6 group">
+  <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-3 group-hover:bg-white/30 transition-all duration-300 group-hover:scale-105">
+    <span className="text-3xl">🏥</span>
+  </div>
+  <span className="text-2xl font-bold text-white">MediCare</span>
+  <span className="text-xs text-white/50 mt-1">Healthcare at your fingertips</span>
+</Link>
+    
+    </div>
+
+
+
     <div className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-8 text-white">
+
 
       <h2 className="text-3xl font-bold text-center mb-2">
         Welcome Back 👋
@@ -149,6 +164,19 @@ return (
 
       </form>
 
+
+
+
+<div className="mt-4 text-center">
+  <Link
+    to="/"
+    className="inline-flex items-center gap-2 text-white/70 hover:text-white transition text-sm"
+  >
+    ← Back to Homepage
+  </Link>
+</div>
+
+
       {/* Footer */}
       <p className="text-center text-sm text-white/70 mt-6">
         Don't have an account?{" "}
@@ -160,6 +188,7 @@ return (
         </Link>
       </p>
     </div>
+
   </div>
 );
 };

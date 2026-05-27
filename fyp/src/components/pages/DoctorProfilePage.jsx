@@ -275,11 +275,11 @@ const DoctorProfilePage = () => {
                   <div className="grid grid-cols-2 gap-4 max-w-md">
                     <div className={`p-3 rounded-lg text-center ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>
                       <p className="text-sm text-gray-500">First Visit</p>
-                      <p className="text-xl font-bold">${doctor.consultationFee}</p>
+                      <p className="text-xl font-bold">Rs.{doctor.consultationFee}</p>
                     </div>
                     <div className={`p-3 rounded-lg text-center ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>
                       <p className="text-sm text-gray-500">Follow-up</p>
-                      <p className="text-xl font-bold">${doctor.followUpFee || doctor.consultationFee}</p>
+                      <p className="text-xl font-bold">Rs.{doctor.followUpFee || doctor.consultationFee}</p>
                     </div>
                   </div>
                 </div>

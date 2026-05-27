@@ -16,12 +16,31 @@ const DoctorsPage = () => {
     minExperience: '',
     maxFee: '',
     sort: 'rating',
-    videoConsultationAvailable: '' // This matches backend parameter name
+    videoConsultationAvailable: ''
   });
   const [initialized, setInitialized] = useState(false);
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [categories, setCategories] = useState([]);
+  const [showAISection, setShowAISection] = useState(true);
+
+  // Fetch AI categories
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${Backend_Url}/ai/categories`);
+      if (response.data.success) {
+        setCategories(response.data.categories);
+      }
+    } catch (err) {
+      console.error('Error fetching categories:', err);
+    }
+  };
 
   // Initialize filters from URL only once
   useEffect(() => {
@@ -55,7 +74,6 @@ const DoctorsPage = () => {
     try {
       setLoading(true);
       
-      // Create a copy of filters and remove empty values
       const params = {};
       Object.keys(filters).forEach(key => {
         if (filters[key] !== '' && filters[key] !== null && filters[key] !== undefined) {
@@ -63,7 +81,7 @@ const DoctorsPage = () => {
         }
       });
 
-      console.log('Fetching with params:', params); // Debug log
+      console.log('Fetching with params:', params);
 
       const response = await axios.get(`${Backend_Url}/public/doctors`, {
         params: params
@@ -112,12 +130,16 @@ const DoctorsPage = () => {
       sort: 'rating',
       videoConsultationAvailable: ''
     });
-    // Fetch after clearing
     setTimeout(() => fetchDoctors(), 100);
   };
 
   const handleResetSpecialty = () => {
     setFilters(prev => ({ ...prev, specialization: '' }));
+  };
+
+  const handleCategoryClick = (category) => {
+    setFilters(prev => ({ ...prev, specialization: category }));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -126,7 +148,7 @@ const DoctorsPage = () => {
       
       <main className="container mx-auto px-4 py-8">
         {/* Hero Section */}
-        <div className={`rounded-2xl  p-8 mb-8 ${
+        <div className={`rounded-2xl p-8 mb-8 ${
           theme === 'dark' 
             ? 'bg-gradient-to-r from-gray-800 to-blue-900' 
             : 'bg-gradient-to-r from-blue-50 to-indigo-50'
@@ -161,6 +183,67 @@ const DoctorsPage = () => {
             </div>
           )}
         </div>
+
+        {/* ✅ NEW: AI RECOMMENDED CATEGORIES SECTION - Add this whole block */}
+        {categories.length > 0 && showAISection && (
+          <div className={`mb-8 p-6 rounded-2xl ${
+            theme === 'dark' 
+              ? 'bg-gradient-to-r from-purple-900/50 to-blue-900/50 border border-purple-800' 
+              : 'bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🤖</span>
+                <h2 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                  AI Recommended Specialties
+                </h2>
+              </div>
+              <button
+                onClick={() => setShowAISection(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            </div>
+            <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+              ⭐ Most popular specialties on MediCare
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {categories.slice(0, 6).map((cat, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleCategoryClick(cat.category)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    filters.specialization === cat.category
+                      ? 'bg-blue-600 text-white shadow-md scale-105'
+                      : theme === 'dark'
+                        ? 'bg-gray-700 text-gray-200 hover:bg-blue-600 hover:text-white'
+                        : 'bg-white text-gray-700 hover:bg-blue-600 hover:text-white border border-gray-200'
+                  }`}
+                >
+                  {cat.category}
+                  <span className={`ml-2 text-xs ${
+                    filters.specialization === cat.category
+                      ? 'text-blue-200'
+                      : theme === 'dark'
+                        ? 'text-gray-400'
+                        : 'text-gray-400'
+                  }`}>
+                    ({cat.count})
+                  </span>
+                </button>
+              ))}
+            </div>
+            {categories.length > 6 && (
+              <button
+                onClick={() => setShowAISection(false)}
+                className="mt-3 text-xs text-blue-500 hover:text-blue-600"
+              >
+                Show all {categories.length} specialties in filters →
+              </button>
+            )}
+          </div>
+        )}
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Filters Sidebar */}
@@ -289,7 +372,7 @@ const DoctorsPage = () => {
                         : 'border-gray-300 text-gray-700 hover:bg-gray-100'
                     }`}
                   >
-                    Clear Filters
+                    Clear All
                   </button>
                   <button
                     onClick={fetchDoctors}
@@ -433,21 +516,20 @@ const DoctorsPage = () => {
                           </span>
                         </div>
                         
-                        {/* Video Consultation Indicator */}
-                        <div className="flex justify-between text-sm">
-                          <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}>
-                            Consultation
-                          </span>
+                        <div className={`
+                          flex justify-between text-sm
+                        `}>
+                          <span>Consultation</span>
                           <span className="flex items-center">
                             {doctor.videoConsultationAvailable ? (
                               <>
                                 <span className="text-green-500 mr-1">🎥</span>
-                                <span className="text-green-600 font-medium">Video Available</span>
+                                <span className={theme === 'dark' ? 'text-green-300' : 'text-green-600'}>Video Available</span>
                               </>
                             ) : (
                               <>
                                 <span className="text-gray-400 mr-1">🏥</span>
-                                <span className="text-gray-600">In-Person Only</span>
+                                <span className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>In-Person Only</span>
                               </>
                             )}
                           </span>

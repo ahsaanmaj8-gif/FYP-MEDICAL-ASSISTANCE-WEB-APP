@@ -68,6 +68,16 @@ const Orders = () => {
     }
   };
 
+
+  const viewPrescription = (prescriptionUrl) => {
+  if (prescriptionUrl) {
+    window.open(prescriptionUrl, '_blank');
+  } else {
+    toast.info('No prescription uploaded for this order');
+  }
+};
+
+
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">🛒 Customer Orders</h1>
@@ -110,8 +120,37 @@ const Orders = () => {
                       <span>Rs.{item.price * item.quantity}</span>
                     </div>
                   ))}
+
+
+
+
+                  
                 </div>
               </div>
+
+
+
+{order.prescriptionUrl && (
+  <div className="mb-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        <span className="text-purple-600 text-xl">📄</span>
+        <div>
+          <p className="font-semibold text-purple-800">Prescription Uploaded</p>
+          <p className="text-xs text-purple-600">Customer has uploaded a prescription</p>
+        </div>
+      </div>
+      <button
+        onClick={() => viewPrescription(order.prescriptionUrl)}
+        className="px-4 py-2 bg-purple-600 text-white rounded-lg text-sm hover:bg-purple-700 transition"
+      >
+        View Prescription
+      </button>
+    </div>
+  </div>
+)}
+
+
 
               <div className="flex space-x-2">
                 {order.status === 'pending' && (

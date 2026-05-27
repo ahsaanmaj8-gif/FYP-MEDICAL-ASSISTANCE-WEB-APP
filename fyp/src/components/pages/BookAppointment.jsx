@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Header from '../Homepage/Header';
 import Footer from '../Homepage/Footer';
+import { ThemeContext } from '../../context/ThemeContext';
 import { Backend_Url } from './../../../utils/utils';
 
 const BookAppointment = () => {
   const { doctorId } = useParams();
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
 
   const [loading, setLoading] = useState(true);
   const [doctor, setDoctor] = useState(null);
@@ -86,7 +88,6 @@ const BookAppointment = () => {
       setProcessing(true);
       const token = localStorage.getItem('token');
 
-      // 1. Initiate JazzCash payment
       const paymentResponse = await axios.post(
         `${Backend_Url}/appointments/payment/jazzcash/initiate`,
         {
@@ -98,7 +99,6 @@ const BookAppointment = () => {
       );
 
       if (paymentResponse.data.success) {
-        // 2. Book appointment after payment
         const appointmentResponse = await axios.post(
           `${Backend_Url}/appointments/book`,
           {
@@ -139,6 +139,30 @@ const BookAppointment = () => {
     return `${hour12}:${minutes} ${ampm}`;
   };
 
+  // Dynamic classes based on theme
+  const bgColor = theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50';
+  const cardBg = theme === 'dark' ? 'bg-gray-800' : 'bg-white';
+  const textColor = theme === 'dark' ? 'text-white' : 'text-gray-900';
+  const subTextColor = theme === 'dark' ? 'text-gray-300' : 'text-gray-600';
+  const borderColor = theme === 'dark' ? 'border-gray-700' : 'border-gray-300';
+  const inputBg = theme === 'dark' ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-gray-900 border-gray-300';
+  const labelColor = theme === 'dark' ? 'text-gray-300' : 'text-gray-700';
+  const slotBg = theme === 'dark' ? 'bg-gray-700 hover:bg-blue-900' : 'bg-white hover:bg-blue-50';
+  const slotSelectedBg = 'bg-blue-600 border-blue-600 text-white';
+  const slotBookedBg = theme === 'dark' ? 'bg-gray-600 border-gray-500 opacity-50' : 'bg-gray-100 border-gray-200 opacity-60';
+  const progressBg = theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200';
+  const progressActiveBg = 'bg-blue-600';
+  const stepCircleActive = 'bg-blue-600 text-white';
+  const stepCircleInactive = theme === 'dark' ? 'bg-gray-700 text-gray-400' : 'bg-gray-200 text-gray-600';
+  const stepTextActive = theme === 'dark' ? 'text-blue-400' : 'text-blue-600';
+  const stepTextInactive = theme === 'dark' ? 'text-gray-500' : 'text-gray-400';
+  const summaryBg = theme === 'dark' ? 'bg-blue-900/30' : 'bg-blue-50';
+  const demoBoxBorder = theme === 'dark' ? 'border-green-700' : 'border-green-300';
+  const demoBoxBg = theme === 'dark' ? 'bg-green-900/20' : 'bg-green-50';
+  const demoTextColor = theme === 'dark' ? 'text-green-300' : 'text-green-800';
+  const warningBg = theme === 'dark' ? 'bg-yellow-900/30' : 'bg-yellow-50';
+  const warningText = theme === 'dark' ? 'text-yellow-300' : 'text-yellow-800';
+
   // Get tomorrow's date for min date
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -150,7 +174,7 @@ const BookAppointment = () => {
   const maxDateStr = maxDate.toISOString().split('T')[0];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={`min-h-screen ${bgColor} transition-colors duration-300`}>
       <Header />
       
       <div className="container mx-auto px-4 py-8">
@@ -159,20 +183,20 @@ const BookAppointment = () => {
           <div className="mb-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center w-full">
-                <div className={`flex items-center ${bookingStep >= 1 ? 'text-blue-600' : 'text-gray-400'}`}>
+                <div className={`flex items-center ${bookingStep >= 1 ? stepTextActive : stepTextInactive}`}>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
-                    bookingStep >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
+                    bookingStep >= 1 ? stepCircleActive : stepCircleInactive
                   }`}>
                     1
                   </div>
                   <span className="ml-2 font-medium">Select Slot</span>
                 </div>
                 <div className={`flex-1 h-1 mx-4 ${
-                  bookingStep >= 2 ? 'bg-blue-600' : 'bg-gray-200'
+                  bookingStep >= 2 ? progressActiveBg : progressBg
                 }`}></div>
-                <div className={`flex items-center ${bookingStep >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
+                <div className={`flex items-center ${bookingStep >= 2 ? stepTextActive : stepTextInactive}`}>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
-                    bookingStep >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
+                    bookingStep >= 2 ? stepCircleActive : stepCircleInactive
                   }`}>
                     2
                   </div>
@@ -185,12 +209,12 @@ const BookAppointment = () => {
           {bookingStep === 1 ? (
             <>
               {/* Step 1: Select Date & Time */}
-              <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-                <h2 className="text-2xl font-bold mb-6">Select Appointment Date & Time</h2>
+              <div className={`rounded-2xl shadow-lg p-6 mb-6 ${cardBg}`}>
+                <h2 className={`text-2xl font-bold mb-6 ${textColor}`}>Select Appointment Date & Time</h2>
                 
                 {/* Date Selection */}
                 <div className="mb-8">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className={`block text-sm font-medium mb-2 ${labelColor}`}>
                     Select Date *
                   </label>
                   <input
@@ -199,7 +223,7 @@ const BookAppointment = () => {
                     onChange={handleDateChange}
                     min={minDate}
                     max={maxDateStr}
-                    className="w-full md:w-64 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className={`w-full md:w-64 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${inputBg} ${borderColor}`}
                   />
                 </div>
 
@@ -207,12 +231,12 @@ const BookAppointment = () => {
                 {selectedDate && (
                   <div>
                     <div className="flex justify-between items-center mb-4">
-                      <h3 className="text-lg font-semibold">
+                      <h3 className={`text-lg font-semibold ${textColor}`}>
                         Available Slots for {getDayName(selectedDate)}
                       </h3>
                       {doctor && (
                         <div className="text-right">
-                          <p className="text-sm text-gray-600">Consultation Fee</p>
+                          <p className={`text-sm ${subTextColor}`}>Consultation Fee</p>
                           <p className="text-2xl font-bold text-blue-600">Rs.{doctor.consultationFee}</p>
                         </div>
                       )}
@@ -221,13 +245,13 @@ const BookAppointment = () => {
                     {loading ? (
                       <div className="text-center py-8">
                         <div className="inline-block animate-spin h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full"></div>
-                        <p className="mt-2 text-gray-600">Loading slots...</p>
+                        <p className={`mt-2 ${subTextColor}`}>Loading slots...</p>
                       </div>
                     ) : slots.length === 0 ? (
-                      <div className="text-center py-8 bg-gray-50 rounded-lg">
+                      <div className={`text-center py-8 rounded-lg ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50'}`}>
                         <div className="text-4xl mb-2">📅</div>
-                        <h3 className="text-lg font-semibold mb-2">No Slots Available</h3>
-                        <p className="text-gray-600">Please select another date</p>
+                        <h3 className={`text-lg font-semibold mb-2 ${textColor}`}>No Slots Available</h3>
+                        <p className={subTextColor}>Please select another date</p>
                       </div>
                     ) : (
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -239,10 +263,10 @@ const BookAppointment = () => {
                             className={`
                               p-3 rounded-lg border-2 text-center transition-all
                               ${slot.isBooked 
-                                ? 'bg-gray-100 border-gray-200 cursor-not-allowed opacity-60 relative' 
+                                ? slotBookedBg
                                 : selectedSlot?.startTime === slot.startTime
-                                  ? 'bg-blue-600 border-blue-600 text-white'
-                                  : 'bg-white border-gray-200 hover:border-blue-400 hover:bg-blue-50'
+                                  ? slotSelectedBg
+                                  : `${slotBg} ${borderColor} hover:border-blue-400`
                               }
                             `}
                           >
@@ -253,22 +277,13 @@ const BookAppointment = () => {
                             )}
                             <div className={`font-bold ${
                               slot.isBooked 
-                                ? 'text-gray-500' 
+                                ? 'text-gray-500 dark:text-gray-400' 
                                 : selectedSlot?.startTime === slot.startTime
                                   ? 'text-white'
-                                  : 'text-gray-800'
+                                  : textColor
                             }`}>
                               {formatTime(slot.startTime)}
                             </div>
-                            {/* <div className={`text-xs mt-1 ${
-                              slot.isBooked 
-                                ? 'text-gray-400 line-through' 
-                                : selectedSlot?.startTime === slot.startTime
-                                  ? 'text-blue-100'
-                                  : 'text-gray-500'
-                            }`}>
-                              {slot.isBooked ? 'Booked' : `${formatTime(slot.endTime)}`}
-                            </div> */}
                           </button>
                         ))}
                       </div>
@@ -278,10 +293,10 @@ const BookAppointment = () => {
               </div>
 
               {/* Consultation Type */}
-              <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-                <h3 className="text-lg font-semibold mb-4">Consultation Type</h3>
+              <div className={`rounded-2xl shadow-lg p-6 mb-6 ${cardBg}`}>
+                <h3 className={`text-lg font-semibold mb-4 ${textColor}`}>Consultation Type</h3>
                 <div className="space-y-3">
-                  <label className="flex items-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <label className={`flex items-center p-4 border rounded-lg cursor-pointer ${cardBg} ${borderColor} hover:bg-opacity-50 ${theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-50'}`}>
                     <input
                       type="radio"
                       name="appointmentType"
@@ -291,15 +306,15 @@ const BookAppointment = () => {
                       className="h-5 w-5 text-blue-600"
                     />
                     <div className="ml-3">
-                      <span className="font-medium">In-Person Consultation</span>
-                      <p className="text-sm text-gray-500">Visit doctor at clinic/hospital</p>
+                      <span className={`font-medium ${textColor}`}>In-Person Consultation</span>
+                      <p className={`text-sm ${subTextColor}`}>Visit doctor at clinic/hospital</p>
                     </div>
                   </label>
                   
                   <label className={`flex items-center p-4 border rounded-lg ${
                     doctor?.videoConsultationAvailable 
-                      ? 'cursor-pointer hover:bg-gray-50' 
-                      : 'bg-gray-50 cursor-not-allowed opacity-60'
+                      ? `cursor-pointer ${cardBg} ${borderColor} ${theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-50'}`
+                      : `${theme === 'dark' ? 'bg-gray-700 opacity-60' : 'bg-gray-50 opacity-60'} cursor-not-allowed`
                   }`}>
                     <input
                       type="radio"
@@ -311,8 +326,8 @@ const BookAppointment = () => {
                       className="h-5 w-5 text-blue-600"
                     />
                     <div className="ml-3">
-                      <span className="font-medium">Video Consultation</span>
-                      <p className="text-sm text-gray-500">
+                      <span className={`font-medium ${textColor}`}>Video Consultation</span>
+                      <p className={`text-sm ${subTextColor}`}>
                         {doctor?.videoConsultationAvailable 
                           ? 'Consult from home via video call' 
                           : 'Video consultation not available'}
@@ -323,11 +338,11 @@ const BookAppointment = () => {
               </div>
 
               {/* Symptoms & Description */}
-              <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-                <h3 className="text-lg font-semibold mb-4">Symptoms & Details</h3>
+              <div className={`rounded-2xl shadow-lg p-6 mb-6 ${cardBg}`}>
+                <h3 className={`text-lg font-semibold mb-4 ${textColor}`}>Symptoms & Details</h3>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className={`block text-sm font-medium mb-2 ${labelColor}`}>
                       Symptoms (comma separated)
                     </label>
                     <input
@@ -335,11 +350,11 @@ const BookAppointment = () => {
                       value={symptoms}
                       onChange={(e) => setSymptoms(e.target.value)}
                       placeholder="e.g., fever, cough, headache"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${inputBg} ${borderColor}`}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className={`block text-sm font-medium mb-2 ${labelColor}`}>
                       Additional Description
                     </label>
                     <textarea
@@ -347,7 +362,7 @@ const BookAppointment = () => {
                       onChange={(e) => setDescription(e.target.value)}
                       rows="3"
                       placeholder="Describe your condition in detail..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${inputBg} ${borderColor}`}
                     />
                   </div>
                 </div>
@@ -358,7 +373,7 @@ const BookAppointment = () => {
                 <button
                   onClick={handleContinue}
                   disabled={!selectedSlot}
-                  className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
                 >
                   Continue to Payment
                 </button>
@@ -367,36 +382,36 @@ const BookAppointment = () => {
           ) : (
             <>
               {/* Step 2: Payment with JazzCash */}
-              <div className="bg-white rounded-2xl shadow-lg p-8">
+              <div className={`rounded-2xl shadow-lg p-8 ${cardBg}`}>
                 <div className="text-center mb-8">
                   <div className="text-6xl mb-4">💳</div>
-                  <h2 className="text-2xl font-bold mb-2">Complete Your Payment</h2>
-                  <p className="text-gray-600">Pay securely with JazzCash</p>
+                  <h2 className={`text-2xl font-bold mb-2 ${textColor}`}>Complete Your Payment</h2>
+                  <p className={subTextColor}>Pay securely with JazzCash</p>
                 </div>
 
                 {/* Booking Summary */}
-                <div className="bg-blue-50 rounded-xl p-6 mb-8">
-                  <h3 className="font-semibold text-lg mb-4">Booking Summary</h3>
+                <div className={`rounded-xl p-6 mb-8 ${summaryBg}`}>
+                  <h3 className={`font-semibold text-lg mb-4 ${textColor}`}>Booking Summary</h3>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Doctor:</span>
-                      <span className="font-medium">{doctor?.name}</span>
+                      <span className={subTextColor}>Doctor:</span>
+                      <span className={`font-medium ${textColor}`}>{doctor?.name}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Date:</span>
-                      <span className="font-medium">{new Date(selectedDate).toLocaleDateString()}</span>
+                      <span className={subTextColor}>Date:</span>
+                      <span className={`font-medium ${textColor}`}>{new Date(selectedDate).toLocaleDateString()}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Time:</span>
-                      <span className="font-medium">{formatTime(selectedSlot?.startTime)}</span>
+                      <span className={subTextColor}>Time:</span>
+                      <span className={`font-medium ${textColor}`}>{formatTime(selectedSlot?.startTime)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Type:</span>
-                      <span className="font-medium capitalize">{appointmentType.replace('-', ' ')}</span>
+                      <span className={subTextColor}>Type:</span>
+                      <span className={`font-medium ${textColor} capitalize`}>{appointmentType.replace('-', ' ')}</span>
                     </div>
-                    <div className="border-t pt-3 mt-3">
+                    <div className={`border-t pt-3 mt-3 ${borderColor}`}>
                       <div className="flex justify-between">
-                        <span className="font-semibold">Total Amount:</span>
+                        <span className={`font-semibold ${textColor}`}>Total Amount:</span>
                         <span className="text-2xl font-bold text-blue-600">Rs.{doctor?.consultationFee}</span>
                       </div>
                     </div>
@@ -404,7 +419,7 @@ const BookAppointment = () => {
                 </div>
 
                 {/* JazzCash Payment Form */}
-                <div className="border-2 border-dashed border-green-300 rounded-xl p-6 mb-6">
+                <div className={`border-2 border-dashed rounded-xl p-6 mb-6 ${demoBoxBorder}`}>
                   <div className="flex items-center justify-center mb-4">
                     <img 
                       src="https://crystalpng.com/wp-content/uploads/2024/12/new-Jazzcash-logo-768x768.png" 
@@ -414,11 +429,11 @@ const BookAppointment = () => {
                   </div>
                   
                   <div className="space-y-4">
-                    <div className="bg-green-50 p-4 rounded-lg">
-                      <p className="text-sm text-green-800">
+                    <div className={`p-4 rounded-lg ${demoBoxBg}`}>
+                      <p className={`text-sm ${demoTextColor}`}>
                         <span className="font-bold">Merchant ID:</span> MC604531
                       </p>
-                      <p className="text-sm text-green-800 mt-1">
+                      <p className={`text-sm ${demoTextColor} mt-1`}>
                         <span className="font-bold">Amount:</span> PKR {doctor?.consultationFee * 280}
                       </p>
                     </div>
@@ -428,19 +443,19 @@ const BookAppointment = () => {
                         type="text"
                         placeholder="Mobile Number"
                         defaultValue="03001234567"
-                        className="px-4 py-3 border border-gray-300 rounded-lg"
+                        className={`px-4 py-3 border rounded-lg ${inputBg} ${borderColor}`}
                         readOnly
                       />
                       <input
                         type="password"
                         placeholder="JazzCash PIN"
                         defaultValue="1234"
-                        className="px-4 py-3 border border-gray-300 rounded-lg"
+                        className={`px-4 py-3 border rounded-lg ${inputBg} ${borderColor}`}
                         readOnly
                       />
                     </div>
 
-                    <div className="bg-yellow-50 p-3 rounded-lg text-sm text-yellow-800">
+                    <div className={`p-3 rounded-lg text-sm ${warningBg} ${warningText}`}>
                       ⚡ Demo Mode: No actual amount will be deducted
                     </div>
                   </div>
@@ -450,14 +465,14 @@ const BookAppointment = () => {
                 <div className="flex space-x-4">
                   <button
                     onClick={() => setBookingStep(1)}
-                    className="flex-1 border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50"
+                    className={`flex-1 border-2 px-6 py-3 rounded-lg font-semibold transition ${borderColor} ${textColor} hover:bg-opacity-10 ${theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-50'}`}
                   >
                     Back
                   </button>
                   <button
                     onClick={handlePayment}
                     disabled={processing}
-                    className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
                   >
                     {processing ? (
                       <span className="flex items-center justify-center">
@@ -473,7 +488,7 @@ const BookAppointment = () => {
                   </button>
                 </div>
 
-                <p className="text-xs text-center text-gray-500 mt-4">
+                <p className={`text-xs text-center mt-4 ${subTextColor}`}>
                   This is a demo integration. No actual payment will be processed.
                 </p>
               </div>

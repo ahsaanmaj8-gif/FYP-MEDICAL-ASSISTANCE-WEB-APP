@@ -62,6 +62,8 @@ const PublicPharmacyPage = () => {
     if (product.prescriptionRequired) {
       alert('This medicine requires a prescription. Please upload your prescription.');
       // Navigate to prescription upload page
+      navigate(`/pharmacy/order/${product._id}`);
+
     } else {
       navigate(`/pharmacy/order/${product._id}`);
     }

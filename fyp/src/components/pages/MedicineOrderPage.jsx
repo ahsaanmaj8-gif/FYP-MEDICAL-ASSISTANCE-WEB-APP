@@ -163,9 +163,6 @@ const fetchProductWithAuth = async () => {
     setPrescription(file);
   };
 
-  // Update the handleSubmit function in MedicineOrderPage.jsx:
-
-// In MedicineOrderPage.jsx - Update handleSubmit function:
 
 const handleSubmit = async (e) => {
   e.preventDefault();

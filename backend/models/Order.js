@@ -66,6 +66,29 @@ const orderSchema = new mongoose.Schema({
     enum: ['pending', 'paid', 'failed'],
     default: 'pending'
   },
+
+
+  //   prescriptionUrl: {
+  //   type: String,
+  //   default: null
+  // },
+  prescriptionRequired: {
+    type: Boolean,
+    default: false
+  },
+  prescriptionVerified: {
+    type: Boolean,
+    default: false
+  },
+
+
+
+  //this work as a prescription picture i used this 
+  profilePicture: {
+    type: String,
+    default: ''
+  },
+
   
   // Delivery Information
   deliveryType: {

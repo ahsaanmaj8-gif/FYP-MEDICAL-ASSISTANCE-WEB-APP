@@ -13,6 +13,7 @@ const doctorRouter = require('./routes/doctorRouter');
 const statsRouter = require('./routes/statsRouter');
 const videoRouter = require('./routes/videoRouter');
 const reviewRouter = require('./routes/reviewRouter');
+const aiRouter = require("./routes/aiRouter");
 
 require("dotenv").config();
 require("./config/connection_db");
@@ -45,7 +46,7 @@ app.use('/api/v1/public', publicRouter);
 app.use('/api/v1/contact', contactRouter);
 app.use('/api/v1/pharmacy', pharmacyRouter);
 
-
+app.use("/api/v1/ai", aiRouter);
 
 app.get('/', (req, res) => {
   res.json({ 
